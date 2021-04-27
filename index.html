@@ -439,6 +439,95 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+pre.CodeRay{background:#f7f7f8}
+.CodeRay .line-numbers{border-right:1px solid currentColor;opacity:.35;padding:0 .5em 0 0}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.75em}
+.CodeRay .line-numbers strong{color:#000}
+table.CodeRay{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.CodeRay td{vertical-align:top;line-height:inherit}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.code{padding:0 0 0 .75em}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+</style>
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -457,13 +546,73 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#source-code">1.1. Source Code</a></li>
 </ul>
 </li>
-<li><a href="#getting-started">2. Getting Started</a>
+<li><a href="#summary-highlights">2. Code Challenge Summary</a></li>
+<li><a href="#code-challenge-highlights">3. Code Challenge Highlights</a></li>
+<li><a href="#getting-started">4. Getting Started</a>
 <ul class="sectlevel2">
-<li><a href="#pre-requisites">2.1. Pre-requisites</a></li>
+<li><a href="#pre-requisites">4.1. Pre-requisites</a></li>
+<li><a href="#githib-checkout">4.2. Build From Source</a></li>
+<li><a href="#running-locally">4.3. Development Environment Setup</a>
+<ul class="sectlevel3">
+<li><a href="#starting-local-services">4.3.1. Starting Local Services</a></li>
+<li><a href="#running-microservices-locally">4.3.2. Running Microservices Locally</a></li>
 </ul>
 </li>
-<li><a href="#architecture">3. Architecture</a></li>
-<li><a href="#microservices">4. Reloadly Microservices</a></li>
+</ul>
+</li>
+<li><a href="#architecture">5. Architecture</a></li>
+<li><a href="#microservices">6. Reloadly Services</a>
+<ul class="sectlevel2">
+<li><a href="#microservices-auth">6.1. Authentication Microservice</a></li>
+<li><a href="#microservices-acct">6.2. Account Microservice</a></li>
+<li><a href="#microservices-tx">6.3. Transaction Microservice</a></li>
+<li><a href="#microservices-tx-processor">6.4. Transaction Processor</a></li>
+<li><a href="#microservices-notif">6.5. Notification Microservice</a></li>
+</ul>
+</li>
+<li><a href="#components">7. Reloadly Modules</a>
+<ul class="sectlevel2">
+<li><a href="#email">7.1. Email</a></li>
+<li><a href="#sms">7.2. SMS</a></li>
+<li><a href="#security-integration">7.3. Security Integration</a></li>
+<li><a href="#notification-integration">7.4. Notification Integration</a></li>
+<li><a href="#swagger-ui-integration">7.5. Swagger UI Integration</a></li>
+</ul>
+</li>
+<li><a href="#production-deployment">8. Production Deployment</a>
+<ul class="sectlevel2">
+<li><a href="#kubernetes-deployment-eks">8.1. Kubernetes Deployment (EKS)</a>
+<ul class="sectlevel3">
+<li><a href="#docker-images">8.1.1. Docker Images</a></li>
+<li><a href="#helm-charts">8.1.2. Helm Charts</a></li>
+</ul>
+</li>
+<li><a href="#aws-beanstalk">8.2. AWS Beanstalk</a></li>
+</ul>
+</li>
+<li><a href="#production-monitoring">9. Production Monitoring</a>
+<ul class="sectlevel2">
+<li><a href="#spring-boot-admin">9.1. Spring Boot Admin</a></li>
+<li><a href="#grafana">9.2. Grafana</a></li>
+<li><a href="#prometheus">9.3. Prometheus</a></li>
+<li><a href="#loki">9.4. Loki</a></li>
+</ul>
+</li>
+<li><a href="#product-dev-approach">10. Product Development Approach</a>
+<ul class="sectlevel2">
+<li><a href="#processes-and-methodology">10.1. Processes and Methodology</a></li>
+<li><a href="#team-culture">10.2. Team Culture</a></li>
+<li><a href="#tools">10.3. Tools</a>
+<ul class="sectlevel3">
+<li><a href="#team-communication">10.3.1. Team Communication</a></li>
+<li><a href="#defect-management">10.3.2. Defect Management</a></li>
+<li><a href="#release-management">10.3.3. Release Management</a></li>
+<li><a href="#source-code-management">10.3.4. Source Code Management</a></li>
+<li><a href="#cicd-and-automation">10.3.5. CI/CD and Automation</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -500,43 +649,733 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting-started"><a class="anchor" href="#getting-started"></a><a class="link" href="#getting-started">2. Getting Started</a></h2>
+<h2 id="summary-highlights"><a class="anchor" href="#summary-highlights"></a><a class="link" href="#summary-highlights">2. Code Challenge Summary</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices. The following features have been implemented.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/reloadly-solution-highlights-and-summary.png" alt="reloadly solution highlights and summary">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Items grayed out, are proposed. Please see open issues in GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-challenge-highlights"><a class="anchor" href="#code-challenge-highlights"></a><a class="link" href="#code-challenge-highlights">3. Code Challenge Highlights</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>~ 12000 lines of code</strong> covered by JUnit tests.</p>
+</li>
+<li>
+<p>Modern tech stack, event driven architecture and solid design principles.</p>
+</li>
+<li>
+<p>Fully leverages Spring Boot Technology.</p>
+</li>
+<li>
+<p>Advanced Spring Boot features including auto-configuration.</p>
+</li>
+<li>
+<p>Ultra scalable and resilient transaction processor built on Kafka technology.</p>
+</li>
+<li>
+<p>End to end enterprise security using dedicated Authentication Service designed to be used across the enterprise.</p>
+</li>
+<li>
+<p>Production ready features, e.g. Spring Boot Admin.</p>
+</li>
+<li>
+<p>Extensive documentation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started"><a class="anchor" href="#getting-started"></a><a class="link" href="#getting-started">4. Getting Started</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section provides documentation on setting up a local installation of the Reloadly Microservices. Create an issue on GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a> if you have questions or need help.</p>
 </div>
 <div class="sect2">
-<h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a><a class="link" href="#pre-requisites">2.1. Pre-requisites</a></h3>
+<h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a><a class="link" href="#pre-requisites">4.1. Pre-requisites</a></h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments. The platform has been tested on macOS Big Sur.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Hardware: Either physical or Virtual machines with minimum 4 GB RAM and 2 CPU Cores <em>(8 GB RAM, 4 CPU Cores if you want to run cluster)</em></p>
+<p><strong>Hardware</strong>: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores <em>(16 GB RAM, 8 CPU Cores if you want to do performance testing)</em>.</p>
 </li>
 <li>
-<p>Operating System: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)</p>
+<p><strong>Operating System</strong>: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)</p>
 </li>
 <li>
-<p>Java - JDK 8</p>
+<p><strong>Java</strong> - JDK 8, or JDK 11.</p>
 </li>
 <li>
-<p>Build Tool - Maven 3.6 or above <em>(Optional)</em></p>
+<p><strong>Build Tool</strong> - Maven 3.6 or above</p>
 </li>
 <li>
-<p>Consul <em>(Optional)</em></p>
+<p><strong>Database</strong> - MySQL, locally running or remotely hosted.</p>
 </li>
 <li>
-<p>Cassandra <em>(Optional)</em></p>
+<p><strong>Kafka</strong> - Local instance with the broker server listening on port 9092. A remotely hosted Kafka cluster is acceptable as well.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Installation on macOS</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install JDK by following the instructions <a href="https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md">here</a>. Please install JDK 8 or 11 only. Other JDK versions have not been tested.</p>
+</li>
+<li>
+<p>Install Apache Maven by following the instructions <a href="https://formulae.brew.sh/formula/maven">here</a>.</p>
+</li>
+<li>
+<p>Install Apache Kafka by following the instructions <a href="https://formulae.brew.sh/formula/kafka">here</a>.</p>
+</li>
+<li>
+<p>Install MySQL by following the instructions <a href="https://formulae.brew.sh/formula/mysql">here</a>.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="githib-checkout"><a class="anchor" href="#githib-checkout"></a><a class="link" href="#githib-checkout">4.2. Build From Source</a></h3>
+<div class="paragraph">
+<p>Clone the git repository from GitHub into a directory of your choice.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>git clone git@github.com:arunkpatra/reloadly-services.git</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build code and run tests. Build should pass, for you to proceed further with the rest of the chapter. From the directory where you cloned the repository, issue the following commands.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd reloadly-services
+mvn clean install</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The above commands will build code and run integration tests. The build artifacts are installed to your local maven repository. For building and running tests, you do NOT need a locally running Kafka and MySQL instance. For running tests, in-memory instances of these resources are run.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-locally"><a class="anchor" href="#running-locally"></a><a class="link" href="#running-locally">4.3. Development Environment Setup</a></h3>
+<div class="paragraph">
+<p>This is useful, when you want to set a development environment and run all the microservices on a single local machine. Kubernetes deployment support is coming up. See  <a href="https://github.com/arunkpatra/reloadly-services/issues/17">this GitHub issue</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>These instructions are for macOS. Please tailor them to run in other environments like Windows and Linux.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="starting-local-services"><a class="anchor" href="#starting-local-services"></a><a class="link" href="#starting-local-services">4.3.1. Starting Local Services</a></h4>
+<div class="paragraph">
+<p>Following services need to be started before you run microservices.</p>
+</div>
+<div class="sect4">
+<h5 id="mysql-setup"><a class="anchor" href="#mysql-setup"></a><a class="link" href="#mysql-setup">MySQL Setup</a></h5>
+<div class="paragraph">
+<p>Issue the following commands. You should have installed MySQL locally and verified it to work correctly as a pre-requisite.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mysql.server start</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You must secure your local MySQL installation and create a user with database wide access. You can use the admin user for now, on your local machine. See MySQL docs for more information. Take a note of the username and password of the admin user; you will need it in a later step.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All database tables used by the microservices need to be created upfront in your local MySQL database instance. As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.</p>
+</div>
+<div class="paragraph">
+<p>Run the following scripts in order.</p>
+</div>
+<div class="sect5">
+<h6 id="authentication-microservice-schema"><a class="anchor" href="#authentication-microservice-schema"></a><a class="link" href="#authentication-microservice-schema">Authentication Microservice Schema</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> rlauthdb;
+USE rlauthdb;
+
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> api_key_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> username_password_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> authority_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> role_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> user_table;
+
+<span class="comment">--
+-- User table. Contains unique UIDs.</span>
+<span class="comment">--
+CREATE TABLE user_table</span>
+(
+    id     <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid    <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    active <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>
+);
+
+<span class="comment">--
+-- Valid roles that may be assigned to a user.</span>
+<span class="comment">--
+create table role_table</span>
+(
+    id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    role_name <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>
+);
+
+<span class="comment">--
+-- Authorities assigned to a user. Authorities are equivalent to roles in the current context.</span>
+<span class="comment">--
+CREATE TABLE authority_table</span>
+(
+    id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    authority <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> unique_user_id_authority <span class="directive">UNIQUE</span> (uid, authority),
+    <span class="type">CONSTRAINT</span> fk_igc_authority_user_name_igc_user_user_name
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
+            <span class="keyword">REFERENCES</span> user_table (uid),
+    <span class="type">CONSTRAINT</span> fk_igc_authority_authority_igc_role_role_name
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (authority)
+            <span class="keyword">REFERENCES</span> role_table (role_name)
+);
+
+<span class="comment">--
+-- Table supporting a username/password based authentication. Passwords are encrypted.</span>
+<span class="comment">--
+CREATE TABLE username_password_table</span>
+(
+    id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    user_name <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    password  <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> fk_username_password_table_user_id_user_table
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
+            <span class="keyword">REFERENCES</span> user_table (uid)
+);
+
+<span class="class">create</span> <span class="type">TABLE</span> api_key_table
+(
+    id      <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    api_key <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    active  <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>,
+    <span class="type">CONSTRAINT</span> fk_api_key_table_uid_user_table
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
+            <span class="keyword">REFERENCES</span> user_table (uid)
+)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="account-microservice-schema"><a class="anchor" href="#account-microservice-schema"></a><a class="link" href="#account-microservice-schema">Account Microservice Schema</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> rlacctdb;
+USE rlacctdb;
+
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> address_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> account_balance_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> account_table;
+
+<span class="comment">--
+-- Accounts table.</span>
+<span class="comment">--
+CREATE TABLE account_table</span>
+(
+    id           <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid          <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>, <span class="comment">-- Only one account per user ID</span>
+    account_id   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    name         <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    email        <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    currency_cd  <span class="predefined-type">VARCHAR</span>(<span class="integer">3</span>)            <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">USD</span><span class="delimiter">'</span></span>,
+    active       <span class="predefined-type">BOOLEAN</span>                        <span class="directive">DEFAULT</span> <span class="predefined-constant">TRUE</span>
+);
+
+<span class="comment">--
+-- Account Balance table.</span>
+<span class="comment">--
+CREATE TABLE account_balance_table</span>
+(
+    id              <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    account_id      <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    account_balance <span class="predefined-type">FLOAT</span>                 <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="float">0.0</span>,
+    <span class="type">CONSTRAINT</span> fk_acct_balance_table_acct_id_acct_table
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (account_id)
+            <span class="keyword">REFERENCES</span> account_table (account_id)
+);
+
+<span class="comment">--
+-- Address table.</span>
+<span class="comment">--
+CREATE TABLE address_table</span>
+(
+    id             <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    account_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    address_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">BILLING</span><span class="delimiter">'</span></span>,
+    address_line_1 <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    address_line_2 <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>),
+    city           <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    state          <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    postal_code    <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    country        <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>),
+    <span class="type">CONSTRAINT</span> fk_address_table_acct_id_acct_table
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (account_id)
+            <span class="keyword">REFERENCES</span> account_table (account_id)
+);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="transaction-microservice-schema"><a class="anchor" href="#transaction-microservice-schema"></a><a class="link" href="#transaction-microservice-schema">Transaction Microservice Schema</a></h6>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The following script, sets up the tables needed for both the <code>transaction-processor</code> and the <code>transaction-service</code>. See later sections for details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> rltxndb;
+USE rltxndb;
+
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> money_reload_txn_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> airtime_send_txn_table;
+<span class="class">DROP</span> <span class="type">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> transaction_table;
+<span class="comment">--
+-- Transaction table.</span>
+<span class="comment">--
+CREATE TABLE transaction_table</span>
+(
+    id         <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid        <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    txn_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_status <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>
+);
+
+<span class="class">CREATE</span> <span class="type">TABLE</span> money_reload_txn_table
+(
+    id     <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    txn_id <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    amount <span class="predefined-type">FLOAT</span>                                   <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> fk_money_reload_txn_table_txn_id
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (txn_id)
+            <span class="keyword">REFERENCES</span> transaction_table (txn_id)
+);
+
+<span class="class">CREATE</span> <span class="type">TABLE</span> airtime_send_txn_table
+(
+    id           <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    txn_id       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    amount       <span class="predefined-type">FLOAT</span>                                   <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> fk_airtime_send_txn_table_txn_id
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (txn_id)
+            <span class="keyword">REFERENCES</span> transaction_table (txn_id)
+);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="seed-data"><a class="anchor" href="#seed-data"></a><a class="link" href="#seed-data">Seed Data</a></h6>
+<div class="paragraph">
+<p>This data must be seeded into the DB for system to work correctly. It does nothing other than ading a service account and API key which is needed for inter-microservice communication.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="comment">--
+-- Data goes into the Auth Database</span>
+<span class="comment">--
+USE rlauthdb;</span>
+
+<span class="comment">--
+-- These roles must exist in the system, for application to work.</span>
+<span class="comment">--
+INSERT INTO role_table(role_name)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">ROLE_USER</span><span class="delimiter">'</span></span>),
+       (<span class="string"><span class="delimiter">'</span><span class="content">ROLE_ADMIN</span><span class="delimiter">'</span></span>);
+
+<span class="comment">--
+-- This is for a Reloadly Service Account, which the system needs.</span>
+<span class="comment">--
+INSERT INTO user_table(uid, active)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="predefined-constant">true</span>);
+
+<span class="comment">--
+-- Service Account authorities.</span>
+<span class="comment">--
+INSERT INTO authority_table(uid, authority)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">ROLE_USER</span><span class="delimiter">'</span></span>),
+       (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">ROLE_ADMIN</span><span class="delimiter">'</span></span>);
+
+<span class="comment">--
+-- Service Account credentials.</span>
+<span class="comment">--
+INSERT INTO username_password_table(user_name, password, uid)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">reloadly_svc_acct</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy</span><span class="delimiter">'</span></span>,
+        <span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>);
+
+<span class="comment">--
+-- API Key issued to 'reloadly_svc_acct' service account.</span>
+<span class="comment">--
+INSERT INTO api_key_table(uid, api_key, active)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">d3fe6f0d-120e-4161-a134-8c2342e36ca6</span><span class="delimiter">'</span></span>, <span class="predefined-constant">true</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After running these scripts, you must have the schemas correctly created and seed data populated. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/reloadly-db-schemas.png" alt="reloadly db schemas">
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="kafka-setup"><a class="anchor" href="#kafka-setup"></a><a class="link" href="#kafka-setup">Kafka Setup</a></h5>
+<div class="paragraph">
+<p>Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>zookeeper-server-start -daemon /usr/local/etc/kafka/zookeeper.properties &amp; kafka-server-start /usr/local/etc/kafka/server.properties</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A topic named <code>com.reloadly.inbound.txn.topic</code> is needed by the <code>transaction-processor</code> (Kafka consumer) and <code>transaction-service</code>(Kafka producer) components. This topic is created on the fly by the transaction-service` if it does not exist. While this is acceptable in non-production environments, it is discouraged in higher environments. The <code>transaction-processor</code> listens to this topic and won&#8217;t process messages if this topic does not exist.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In your local environment, Kafka uses PLAINTEXT by default. In other environments, you must use strong encryption. Please refer Kafka documentation for securing a Kafka installation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-microservices-locally"><a class="anchor" href="#running-microservices-locally"></a><a class="link" href="#running-microservices-locally">4.3.2. Running Microservices Locally</a></h4>
+<div class="paragraph">
+<p>Follow the steps listed below in order to run all components of the platform locally. You should folow these steps sequentially.</p>
+</div>
+<div class="sect4">
+<h5 id="environment-variable-configuration"><a class="anchor" href="#environment-variable-configuration"></a><a class="link" href="#environment-variable-configuration">Environment Variable Configuration</a></h5>
+<div class="paragraph">
+<p>You would need to set the following Environment variables. Use the method that&#8217;s appropriate for your operating system. On macOS, you can export environment variables on the command line as follows.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>export YOUR_ENV_VARIABLE=env_var_value</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Environment Variable</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DB_USER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The MySQL DB username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by all microservices that access the database.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DB_PASSWORD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The MySQL DB password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by all microservices that access the database.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS_ACCESS_KEY_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your AWS account Access key ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send email via Amazon SES</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS_SECRET_ACCESS_KEY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your AWS account Secret access key.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send email via Amazon SES.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EMAIL_DRY_RUN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to <code>true</code> or <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Setting <code>false</code> suppresses email sending. <code>true</code> will send actual emails. You need to configure SES correctly in your AWS account. See Amazon SES documentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SENDER_EMAIL_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sender email ID verified by AWS SES to send emails from.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send email via Amazon SES.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_DRY_RUN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to <code>true</code> or <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Setting <code>false</code> suppresses SMS sending. <code>true</code> will send actual SMS messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_ACCOUNT_SID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account SID. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio (SMS charges will be applied by Twilio).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_AUTH_TOKEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account auth token. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_MSG_SVC_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account Message Service ID. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELOADLY_SVC_ACCT_API_KEY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The reloadly service account API key. Use the value you inserted in the <a href="#seed-data">Seed Data</a> section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed for the platform to work correctly. Use the <code>api-key</code> value from the final <code>INSERT</code> statement in that script.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Consider writing a small shell script, or add these in your <code>~/.zprofile</code> of <code>~./bashprofile</code> file or a suitable method of your liking.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="running-microservices"><a class="anchor" href="#running-microservices"></a><a class="link" href="#running-microservices">Running Microservices</a></h5>
+<div class="paragraph">
+<p>Run these services in sequence (recommended). You must have done a <code>mvn clean install</code> from the root of your cloned repository. That builds all microservices.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ensure that, your MySQL server and Kafka instances are up and running before you proceed with the following steps.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="authentication-microservice"><a class="anchor" href="#authentication-microservice"></a><a class="link" href="#authentication-microservice">Authentication Microservice</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd authentication-service
+mvn spring-boot:run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access Swagger UI of Authentication Microservice at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a></p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="account-microservice"><a class="anchor" href="#account-microservice"></a><a class="link" href="#account-microservice">Account Microservice</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd account-service
+mvn spring-boot:run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access Swagger UI of Authentication Microservice at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a></p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="transaction-microservice"><a class="anchor" href="#transaction-microservice"></a><a class="link" href="#transaction-microservice">Transaction Microservice</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd transaction-service
+mvn spring-boot:run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access Swagger UI of Authentication Microservice at <a href="http://localhost:8081/swagger-ui/" class="bare">localhost:8081/swagger-ui/</a></p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="notification-microservice"><a class="anchor" href="#notification-microservice"></a><a class="link" href="#notification-microservice">Notification Microservice</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd notification-service
+mvn spring-boot:run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access Swagger UI of Authentication Microservice at <a href="http://localhost:8082/swagger-ui/" class="bare">localhost:8082/swagger-ui/</a></p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="transaction-processor"><a class="anchor" href="#transaction-processor"></a><a class="link" href="#transaction-processor">Transaction Processor</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd transaction-processor
+mvn spring-boot:run</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="spring-boot-admin-app"><a class="anchor" href="#spring-boot-admin-app"></a><a class="link" href="#spring-boot-admin-app">Spring Boot Admin App</a></h6>
+<div class="paragraph">
+<p>Issue these commands from the root of your cloned repository.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd admin-service
+mvn spring-boot:run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access the Admin Service Dashboard at <a href="http://localhost:9595/" class="bare">localhost:9595/</a>. You should see the following dashboard once all your services register with the Spring Boot Admin app. You should navigate to the <code>Wallboard</code> tab of the Spring Boot Admin UI.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/spring-boot-admin.png" alt="spring boot admin">
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations! Your services are running.</p>
+</div>
+<div class="paragraph">
+<p>Now head over to the documentation of individual microservices for more details.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="architecture"><a class="anchor" href="#architecture"></a><a class="link" href="#architecture">3. Architecture</a></h2>
+<h2 id="architecture"><a class="anchor" href="#architecture"></a><a class="link" href="#architecture">5. Architecture</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>TODO</p>
@@ -544,10 +1383,129 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="microservices"><a class="anchor" href="#microservices"></a><a class="link" href="#microservices">4. Reloadly Microservices</a></h2>
+<h2 id="microservices"><a class="anchor" href="#microservices"></a><a class="link" href="#microservices">6. Reloadly Services</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>TODO</p>
+<div class="sect2">
+<h3 id="microservices-auth"><a class="anchor" href="#microservices-auth"></a><a class="link" href="#microservices-auth">6.1. Authentication Microservice</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="microservices-acct"><a class="anchor" href="#microservices-acct"></a><a class="link" href="#microservices-acct">6.2. Account Microservice</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="microservices-tx"><a class="anchor" href="#microservices-tx"></a><a class="link" href="#microservices-tx">6.3. Transaction Microservice</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="microservices-tx-processor"><a class="anchor" href="#microservices-tx-processor"></a><a class="link" href="#microservices-tx-processor">6.4. Transaction Processor</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="microservices-notif"><a class="anchor" href="#microservices-notif"></a><a class="link" href="#microservices-notif">6.5. Notification Microservice</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="components"><a class="anchor" href="#components"></a><a class="link" href="#components">7. Reloadly Modules</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="email"><a class="anchor" href="#email"></a><a class="link" href="#email">7.1. Email</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="sms"><a class="anchor" href="#sms"></a><a class="link" href="#sms">7.2. SMS</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="security-integration"><a class="anchor" href="#security-integration"></a><a class="link" href="#security-integration">7.3. Security Integration</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="notification-integration"><a class="anchor" href="#notification-integration"></a><a class="link" href="#notification-integration">7.4. Notification Integration</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="swagger-ui-integration"><a class="anchor" href="#swagger-ui-integration"></a><a class="link" href="#swagger-ui-integration">7.5. Swagger UI Integration</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="production-deployment"><a class="anchor" href="#production-deployment"></a><a class="link" href="#production-deployment">8. Production Deployment</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="kubernetes-deployment-eks"><a class="anchor" href="#kubernetes-deployment-eks"></a><a class="link" href="#kubernetes-deployment-eks">8.1. Kubernetes Deployment (EKS)</a></h3>
+<div class="sect3">
+<h4 id="docker-images"><a class="anchor" href="#docker-images"></a><a class="link" href="#docker-images">8.1.1. Docker Images</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="helm-charts"><a class="anchor" href="#helm-charts"></a><a class="link" href="#helm-charts">8.1.2. Helm Charts</a></h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="aws-beanstalk"><a class="anchor" href="#aws-beanstalk"></a><a class="link" href="#aws-beanstalk">8.2. AWS Beanstalk</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="production-monitoring"><a class="anchor" href="#production-monitoring"></a><a class="link" href="#production-monitoring">9. Production Monitoring</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="spring-boot-admin"><a class="anchor" href="#spring-boot-admin"></a><a class="link" href="#spring-boot-admin">9.1. Spring Boot Admin</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="grafana"><a class="anchor" href="#grafana"></a><a class="link" href="#grafana">9.2. Grafana</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="prometheus"><a class="anchor" href="#prometheus"></a><a class="link" href="#prometheus">9.3. Prometheus</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="loki"><a class="anchor" href="#loki"></a><a class="link" href="#loki">9.4. Loki</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="product-dev-approach"><a class="anchor" href="#product-dev-approach"></a><a class="link" href="#product-dev-approach">10. Product Development Approach</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="processes-and-methodology"><a class="anchor" href="#processes-and-methodology"></a><a class="link" href="#processes-and-methodology">10.1. Processes and Methodology</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="team-culture"><a class="anchor" href="#team-culture"></a><a class="link" href="#team-culture">10.2. Team Culture</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">10.3. Tools</a></h3>
+<div class="sect3">
+<h4 id="team-communication"><a class="anchor" href="#team-communication"></a><a class="link" href="#team-communication">10.3.1. Team Communication</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.3.2. Defect Management</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.3.3. Release Management</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.3.4. Source Code Management</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.3.5. CI/CD and Automation</a></h4>
+
+</div>
 </div>
 </div>
 </div>
