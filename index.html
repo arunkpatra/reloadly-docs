@@ -1434,11 +1434,50 @@ mvn spring-boot:run</pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="microservices-auth"><a class="anchor" href="#microservices-auth"></a><a class="link" href="#microservices-auth">6.1. Authentication Microservice</a></h3>
-
+<div class="paragraph">
+<p>The Authentication service allows multiple enterprise facilities like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>User signup - Currently username and password based login is supported. Can be extended to other auth channels. Users are issued JWT tokens.</p>
+</li>
+<li>
+<p>Signup - Users can signup by choosing a username and password.</p>
+</li>
+<li>
+<p>Token Verification - Verify JWT tokens.</p>
+</li>
+<li>
+<p>API Key verification and issue functions. API keys are issued to users and service accounts.</p>
+</li>
+<li>
+<p>All other microservices call into the Auth Service to validate tokens and API keys. It is a foundational service.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a> when you run your services locally.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/auth-microservice.png" alt="auth microservice">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="microservices-acct"><a class="anchor" href="#microservices-acct"></a><a class="link" href="#microservices-acct">6.2. Account Microservice</a></h3>
-
+<div class="paragraph">
+<p>The Account microservice, allows interacting with Account domain model. Various update and query operations can be performed.</p>
+</div>
+<div class="paragraph">
+<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a> when you run your services locally.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/acct-microservice.png" alt="acct microservice">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="microservices-tx"><a class="anchor" href="#microservices-tx"></a><a class="link" href="#microservices-tx">6.3. Transaction Microservice</a></h3>
