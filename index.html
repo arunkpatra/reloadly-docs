@@ -555,7 +555,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#running-locally">4.3. Development Environment Setup</a>
 <ul class="sectlevel3">
 <li><a href="#starting-local-services">4.3.1. Starting Local Services</a></li>
-<li><a href="#running-microservices-locally">4.3.2. Running Microservices Locally</a></li>
+<li><a href="#running-microservices">4.3.2. Running Microservices</a></li>
+<li><a href="#cleanup">4.3.3. Cleanup</a></li>
 </ul>
 </li>
 </ul>
@@ -568,11 +569,35 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </li>
 <li><a href="#microservices">6. Reloadly Services</a>
 <ul class="sectlevel2">
-<li><a href="#microservices-auth">6.1. Authentication Microservice</a></li>
-<li><a href="#microservices-acct">6.2. Account Microservice</a></li>
-<li><a href="#microservices-tx">6.3. Transaction Microservice</a></li>
-<li><a href="#microservices-tx-processor">6.4. Transaction Processor</a></li>
-<li><a href="#microservices-notif">6.5. Notification Microservice</a></li>
+<li><a href="#microservices-auth">6.1. Authentication Microservice</a>
+<ul class="sectlevel3">
+<li><a href="#api">6.1.1. API</a></li>
+<li><a href="#module-dependencies">6.1.2. Module Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#microservices-acct">6.2. Account Microservice</a>
+<ul class="sectlevel3">
+<li><a href="#api-2">6.2.1. API</a></li>
+<li><a href="#module-dependencies-2">6.2.2. Module Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#microservices-tx">6.3. Transaction Microservice</a>
+<ul class="sectlevel3">
+<li><a href="#api-3">6.3.1. API</a></li>
+<li><a href="#module-dependencies-3">6.3.2. Module Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#microservices-tx-processor">6.4. Transaction Processor</a>
+<ul class="sectlevel3">
+<li><a href="#module-dependencies-4">6.4.1. Module Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#microservices-notif">6.5. Notification Microservice</a>
+<ul class="sectlevel3">
+<li><a href="#api-4">6.5.1. API</a></li>
+<li><a href="#module-dependencies-5">6.5.2. Module Dependencies</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#components">7. Reloadly Modules</a>
@@ -592,7 +617,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#helm-charts">8.1.2. Helm Charts</a></li>
 </ul>
 </li>
-<li><a href="#aws-beanstalk">8.2. AWS Beanstalk</a></li>
+<li><a href="#aws-beanstalk-or-ec2-containers">8.2. AWS Beanstalk or EC2 Containers</a></li>
 </ul>
 </li>
 <li><a href="#production-monitoring">9. Production Monitoring</a>
@@ -606,14 +631,12 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#product-dev-approach">10. Product Development Approach</a>
 <ul class="sectlevel2">
 <li><a href="#processes-and-methodology">10.1. Processes and Methodology</a></li>
-<li><a href="#team-culture">10.2. Team Culture</a></li>
-<li><a href="#tools">10.3. Tools</a>
+<li><a href="#tools">10.2. Tools</a>
 <ul class="sectlevel3">
-<li><a href="#team-communication">10.3.1. Team Communication</a></li>
-<li><a href="#defect-management">10.3.2. Defect Management</a></li>
-<li><a href="#release-management">10.3.3. Release Management</a></li>
-<li><a href="#source-code-management">10.3.4. Source Code Management</a></li>
-<li><a href="#cicd-and-automation">10.3.5. CI/CD and Automation</a></li>
+<li><a href="#defect-management">10.2.1. Defect Management</a></li>
+<li><a href="#release-management">10.2.2. Release Management</a></li>
+<li><a href="#source-code-management">10.2.3. Source Code Management</a></li>
+<li><a href="#cicd-and-automation">10.2.4. CI/CD and Automation</a></li>
 </ul>
 </li>
 </ul>
@@ -626,7 +649,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h2 id="introduction"><a class="anchor" href="#introduction"></a><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This project implements a hypothetical Fintech Platform. It demonstrates Microservice architecture, design, best practices and production ready features. It was developed as part of a code challenge from <a href="https://www.reloadly.com/">Reloadly</a>.</p>
+<p>This project implements a hypothetical Fintech Platform.
+It demonstrates Microservice architecture, design, best practices and production ready features.
+It was developed as part of a code challenge from <a href="https://www.reloadly.com/">Reloadly</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -636,7 +661,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <strong>reloadly</strong> brand name, and logo are copyright of <a href="https://www.reloadly.com/">Reloadly</a>. Permission is hereby granted to <a href="https://www.reloadly.com/">Reloadly</a> to review the architecture, design, source code and documentation of this project. Usage of architecture, design, source code is also being granted to <a href="https://www.reloadly.com/">Reloadly</a> without any constraints, including the right to use in building production systems either in whole or part.</p>
+<p>The <strong>reloadly</strong> brand name, and logo are copyright of <a href="https://www.reloadly.com/">Reloadly</a>.
+Permission is hereby granted to <a href="https://www.reloadly.com/">Reloadly</a> to review the architecture, design, source code and documentation of this project.
+Usage of architecture, design, source code is also being granted to <a href="https://www.reloadly.com/">Reloadly</a> without any constraints, including the right to use in building production systems either in whole or part.</p>
 </div>
 <div class="paragraph">
 <p>Unless required by applicable law or agreed to in writing, this software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
@@ -657,7 +684,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h2 id="summary-highlights"><a class="anchor" href="#summary-highlights"></a><a class="link" href="#summary-highlights">2. Code Challenge Summary</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices. The following features have been implemented.</p>
+<p>The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices.
+The following features have been implemented.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -672,7 +700,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Items grayed out, are proposed. Please see open issues in GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a>.</p>
+<p>Items grayed out, are proposed.
+Please see open issues in GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a>.</p>
 </div>
 </td>
 </tr>
@@ -717,12 +746,14 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h2 id="getting-started"><a class="anchor" href="#getting-started"></a><a class="link" href="#getting-started">4. Getting Started</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section provides documentation on setting up a local installation of the Reloadly Microservices. Create an issue on GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a> if you have questions or need help.</p>
+<p>This section provides documentation on setting up a local installation of the Reloadly Microservices.
+Create an issue on GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues">here</a> if you have questions or need help.</p>
 </div>
 <div class="sect2">
 <h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a><a class="link" href="#pre-requisites">4.1. Pre-requisites</a></h3>
 <div class="paragraph">
-<p>Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments. The platform has been tested on macOS Big Sur.</p>
+<p>Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments.
+The platform has been tested on macOS Big Sur.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -759,7 +790,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="ulist">
 <ul>
 <li>
-<p>Install JDK by following the instructions <a href="https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md">here</a>. Please install JDK 8 or 11 only. Other JDK versions have not been tested.</p>
+<p>Install JDK by following the instructions <a href="https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md">here</a>.
+Please install JDK 8 or 11 only.
+Other JDK versions have not been tested.</p>
 </li>
 <li>
 <p>Install Apache Maven by following the instructions <a href="https://formulae.brew.sh/formula/maven">here</a>.</p>
@@ -788,7 +821,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 </div>
 <div class="paragraph">
-<p>Build code and run tests. Build should pass, for you to proceed further with the rest of the chapter. From the directory where you cloned the repository, issue the following commands.</p>
+<p>Build code and run tests.
+Build should pass, for you to proceed further with the rest of the chapter.
+From the directory where you cloned the repository, issue the following commands.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -804,7 +839,10 @@ mvn clean install</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The above commands will build code and run integration tests. The build artifacts are installed to your local maven repository. For building and running tests, you do NOT need a locally running Kafka and MySQL instance. For running tests, in-memory instances of these resources are run.</p>
+<p>The above commands will build code and run integration tests.
+The build artifacts are installed to your local maven repository.
+For building and running tests, you do NOT need a locally running Kafka and MySQL instance.
+For running tests, in-memory instances of these resources are run.</p>
 </div>
 </td>
 </tr>
@@ -814,7 +852,9 @@ mvn clean install</pre>
 <div class="sect2">
 <h3 id="running-locally"><a class="anchor" href="#running-locally"></a><a class="link" href="#running-locally">4.3. Development Environment Setup</a></h3>
 <div class="paragraph">
-<p>This is useful, when you want to set a development environment and run all the microservices on a single local machine. Kubernetes deployment support is coming up. See  <a href="https://github.com/arunkpatra/reloadly-services/issues/17">this GitHub issue</a>.</p>
+<p>This is useful, when you want to set a development environment and run all the microservices on a single local machine.
+Kubernetes deployment support is coming up.
+See  <a href="https://github.com/arunkpatra/reloadly-services/issues/17">this GitHub issue</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -824,7 +864,8 @@ mvn clean install</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>These instructions are for macOS. Please tailor them to run in other environments like Windows and Linux.</p>
+<p>These instructions are for macOS.
+Please tailor them to run in other environments like Windows and Linux.</p>
 </div>
 </td>
 </tr>
@@ -833,12 +874,13 @@ mvn clean install</pre>
 <div class="sect3">
 <h4 id="starting-local-services"><a class="anchor" href="#starting-local-services"></a><a class="link" href="#starting-local-services">4.3.1. Starting Local Services</a></h4>
 <div class="paragraph">
-<p>Following services need to be started before you run microservices.</p>
+<p>Following the steps below before running your microservices.</p>
 </div>
 <div class="sect4">
 <h5 id="mysql-setup"><a class="anchor" href="#mysql-setup"></a><a class="link" href="#mysql-setup">MySQL Setup</a></h5>
 <div class="paragraph">
-<p>Issue the following commands. You should have installed MySQL locally and verified it to work correctly as a pre-requisite.</p>
+<p>Issue the following commands.
+You should have installed MySQL locally and verified it to work correctly as a pre-requisite.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -853,14 +895,18 @@ mvn clean install</pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You must secure your local MySQL installation and create a user with database wide access. You can use the admin user for now, on your local machine. See MySQL docs for more information. Take a note of the username and password of the admin user; you will need it in a later step.</p>
+<p>You must secure your local MySQL installation and create a user with database wide access.
+You can use the admin user for now, on your local machine.
+See MySQL docs for more information.
+Take a note of the username and password of the admin user; you will need it in a later step.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>All database tables used by the microservices need to be created upfront in your local MySQL database instance. As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.</p>
+<p>All database tables used by the microservices need to be created upfront in your local MySQL database instance.
+As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.</p>
 </div>
 <div class="paragraph">
 <p>Run the following scripts in order.</p>
@@ -884,7 +930,7 @@ USE rlauthdb;
 CREATE TABLE user_table</span>
 (
     id     <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid    <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    uid    <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
     active <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>
 );
 
@@ -894,7 +940,7 @@ CREATE TABLE user_table</span>
 create table role_table</span>
 (
     id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    role_name <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>
+    role_name <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>
 );
 
 <span class="comment">--
@@ -903,8 +949,8 @@ create table role_table</span>
 CREATE TABLE authority_table</span>
 (
     id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    authority <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    authority <span class="predefined-type">VARCHAR</span>(<span class="integer">32</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     <span class="type">CONSTRAINT</span> unique_user_id_authority <span class="directive">UNIQUE</span> (uid, authority),
     <span class="type">CONSTRAINT</span> fk_igc_authority_user_name_igc_user_user_name
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
@@ -920,9 +966,9 @@ CREATE TABLE authority_table</span>
 CREATE TABLE username_password_table</span>
 (
     id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    user_name <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    password  <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    user_name <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    password  <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     <span class="type">CONSTRAINT</span> fk_username_password_table_user_id_user_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
             <span class="keyword">REFERENCES</span> user_table (uid)
@@ -931,8 +977,8 @@ CREATE TABLE username_password_table</span>
 <span class="class">create</span> <span class="type">TABLE</span> api_key_table
 (
     id      <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    api_key <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    uid     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    api_key <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
     active  <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>,
     <span class="type">CONSTRAINT</span> fk_api_key_table_uid_user_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
@@ -958,13 +1004,13 @@ USE rlacctdb;
 CREATE TABLE account_table</span>
 (
     id           <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid          <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>, <span class="comment">-- Only one account per user ID</span>
-    account_id   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    name         <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    email        <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>)          <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    currency_cd  <span class="predefined-type">VARCHAR</span>(<span class="integer">3</span>)            <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">USD</span><span class="delimiter">'</span></span>,
-    active       <span class="predefined-type">BOOLEAN</span>                        <span class="directive">DEFAULT</span> <span class="predefined-constant">TRUE</span>
+    uid          <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>, <span class="comment">-- Only one account per user ID</span>
+    account_id   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    name         <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    email        <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    currency_cd  <span class="predefined-type">VARCHAR</span>(<span class="integer">3</span>)   <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">USD</span><span class="delimiter">'</span></span>,
+    active       <span class="predefined-type">BOOLEAN</span>               <span class="directive">DEFAULT</span> <span class="predefined-constant">TRUE</span>
 );
 
 <span class="comment">--
@@ -973,8 +1019,8 @@ CREATE TABLE account_table</span>
 CREATE TABLE account_balance_table</span>
 (
     id              <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    account_id      <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    account_balance <span class="predefined-type">FLOAT</span>                 <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="float">0.0</span>,
+    account_id      <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    account_balance <span class="predefined-type">FLOAT</span>       <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="float">0.0</span>,
     <span class="type">CONSTRAINT</span> fk_acct_balance_table_acct_id_acct_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (account_id)
             <span class="keyword">REFERENCES</span> account_table (account_id)
@@ -986,13 +1032,13 @@ CREATE TABLE account_balance_table</span>
 CREATE TABLE address_table</span>
 (
     id             <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    account_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    address_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">BILLING</span><span class="delimiter">'</span></span>,
-    address_line_1 <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    account_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    address_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">DEFAULT</span> <span class="string"><span class="delimiter">'</span><span class="content">BILLING</span><span class="delimiter">'</span></span>,
+    address_line_1 <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     address_line_2 <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>),
-    city           <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    state          <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    postal_code    <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>)           <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    city           <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    state          <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    postal_code    <span class="predefined-type">VARCHAR</span>(<span class="integer">20</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     country        <span class="predefined-type">VARCHAR</span>(<span class="integer">64</span>),
     <span class="type">CONSTRAINT</span> fk_address_table_acct_id_acct_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (account_id)
@@ -1011,7 +1057,8 @@ CREATE TABLE address_table</span>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The following script, sets up the tables needed for both the <code>transaction-processor</code> and the <code>transaction-service</code>. See later sections for details.</p>
+<p>The following script, sets up the tables needed for both the <code>transaction-processor</code> and the <code>transaction-service</code>.
+See later sections for details.</p>
 </div>
 </td>
 </tr>
@@ -1031,17 +1078,17 @@ USE rltxndb;
 CREATE TABLE transaction_table</span>
 (
     id         <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid        <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    txn_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    txn_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    txn_status <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>
+    uid        <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_id     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    txn_type   <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_status <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>
 );
 
 <span class="class">CREATE</span> <span class="type">TABLE</span> money_reload_txn_table
 (
     id     <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    txn_id <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    amount <span class="predefined-type">FLOAT</span>                                   <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_id <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    amount <span class="predefined-type">FLOAT</span>       <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     <span class="type">CONSTRAINT</span> fk_money_reload_txn_table_txn_id
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (txn_id)
             <span class="keyword">REFERENCES</span> transaction_table (txn_id)
@@ -1050,9 +1097,9 @@ CREATE TABLE transaction_table</span>
 <span class="class">CREATE</span> <span class="type">TABLE</span> airtime_send_txn_table
 (
     id           <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    txn_id       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    amount       <span class="predefined-type">FLOAT</span>                                   <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>)                             <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    txn_id       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    amount       <span class="predefined-type">FLOAT</span>       <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    phone_number <span class="predefined-type">VARCHAR</span>(<span class="integer">16</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
     <span class="type">CONSTRAINT</span> fk_airtime_send_txn_table_txn_id
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (txn_id)
             <span class="keyword">REFERENCES</span> transaction_table (txn_id)
@@ -1063,7 +1110,8 @@ CREATE TABLE transaction_table</span>
 <div class="sect5">
 <h6 id="seed-data"><a class="anchor" href="#seed-data"></a><a class="link" href="#seed-data">Seed Data</a></h6>
 <div class="paragraph">
-<p>This data must be seeded into the DB for system to work correctly. It does nothing other than ading a service account and API key which is needed for inter-microservice communication.</p>
+<p>This data must be seeded into the DB for system to work correctly.
+It does nothing other than ading a service account and API key which is needed for inter-microservice communication.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1107,19 +1155,16 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </div>
 </div>
 <div class="paragraph">
-<p>After running these scripts, you must have the schemas correctly created and seed data populated. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/reloadly-db-schemas.png" alt="reloadly db schemas">
-</div>
+<p>After running these scripts, you must have the schemas correctly created and seed data populated.
+Please verify.</p>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="kafka-setup"><a class="anchor" href="#kafka-setup"></a><a class="link" href="#kafka-setup">Kafka Setup</a></h5>
 <div class="paragraph">
-<p>Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.</p>
+<p>Issue the following commands.
+You should have installed Kafka locally and verified it to work correctly as a pre-requisite.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1134,7 +1179,10 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A topic named <code>com.reloadly.inbound.txn.topic</code> is needed by the <code>transaction-processor</code> (Kafka consumer) and <code>transaction-service</code>(Kafka producer) components. This topic is created on the fly by the transaction-service` if it does not exist. While this is acceptable in non-production environments, it is discouraged in higher environments. The <code>transaction-processor</code> listens to this topic and won&#8217;t process messages if this topic does not exist.</p>
+<p>A topic named <code>com.reloadly.inbound.txn.topic</code> is needed by the <code>transaction-processor</code> (Kafka consumer) and <code>transaction-service</code>(Kafka producer) components.
+This topic is created on the fly by the transaction-service` if it does not exist.
+While this is acceptable in non-production environments, it is discouraged in higher environments.
+The <code>transaction-processor</code> listens to this topic and won&#8217;t process messages if this topic does not exist.</p>
 </div>
 </td>
 </tr>
@@ -1148,7 +1196,9 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In your local environment, Kafka uses PLAINTEXT by default. In other environments, you must use strong encryption. Please refer Kafka documentation for securing a Kafka installation.</p>
+<p>In your local environment, Kafka uses PLAINTEXT by default.
+In other environments, you must use strong encryption.
+Please refer Kafka documentation for securing a Kafka installation.</p>
 </div>
 </td>
 </tr>
@@ -1157,14 +1207,17 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </div>
 </div>
 <div class="sect3">
-<h4 id="running-microservices-locally"><a class="anchor" href="#running-microservices-locally"></a><a class="link" href="#running-microservices-locally">4.3.2. Running Microservices Locally</a></h4>
+<h4 id="running-microservices"><a class="anchor" href="#running-microservices"></a><a class="link" href="#running-microservices">4.3.2. Running Microservices</a></h4>
 <div class="paragraph">
-<p>Follow the steps listed below in order to run all components of the platform locally. You should folow these steps sequentially.</p>
+<p>Follow the steps listed below in order to run all components of the platform locally.
+You should folow these steps sequentially.</p>
 </div>
 <div class="sect4">
 <h5 id="environment-variable-configuration"><a class="anchor" href="#environment-variable-configuration"></a><a class="link" href="#environment-variable-configuration">Environment Variable Configuration</a></h5>
 <div class="paragraph">
-<p>You would need to set the following Environment variables. Use the method that&#8217;s appropriate for your operating system. On macOS, you can export environment variables on the command line as follows.</p>
+<p>You would need to set the following Environment variables.
+Use the method that&#8217;s appropriate for your operating system.
+On macOS, you can export environment variables on the command line as follows.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1208,7 +1261,9 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EMAIL_DRY_RUN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Set to <code>true</code> or <code>false</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Setting <code>false</code> suppresses email sending. <code>true</code> will send actual emails. You need to configure SES correctly in your AWS account. See Amazon SES documentation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Setting <code>false</code> suppresses email sending. <code>true</code> will send actual emails.
+You need to configure SES correctly in your AWS account.
+See Amazon SES documentation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SENDER_EMAIL_ID</p></td>
@@ -1222,23 +1277,28 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_ACCOUNT_SID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account SID. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account SID.
+Get it from your Twilio account.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio (SMS charges will be applied by Twilio).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_AUTH_TOKEN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account auth token. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account auth token.
+Get it from your Twilio account.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TWILIO_MSG_SVC_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account Message Service ID. Get it from your Twilio account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Twilio account Message Service ID.
+Get it from your Twilio account.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RELOADLY_SVC_ACCT_API_KEY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reloadly service account API key. Use the value you inserted in the <a href="#seed-data">Seed Data</a> section.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Needed for the platform to work correctly. Use the <code>api-key</code> value from the final <code>INSERT</code> statement in that script.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The reloadly service account API key.
+Use the value you inserted in the <a href="#seed-data">Seed Data</a> section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed for the platform to work correctly.
+Use the <code>api-key</code> value from the final <code>INSERT</code> statement in that script.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1250,17 +1310,47 @@ INSERT INTO api_key_table(uid, api_key, active)</span>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Consider writing a small shell script, or add these in your <code>~/.zprofile</code> of <code>~./bashprofile</code> file or a suitable method of your liking.</p>
+<p>Consider writing a small shell script, or add these in your <code>~/.zprofile</code> or <code>~./bashprofile</code> file or a suitable method of your liking.
+After adding, you should <code>source</code> these files for changes to take effect, e.g. <code>source ~/.zprofile</code>.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>You may add the following in the script.
+Supply appropriate values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell script">#
+# These properties are used by the platform microservices
+#
+export DB_USER=
+export DB_PASSWORD=
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+
+# Change this to false, if you want to send actual emails.
+export EMAIL_DRY_RUN=true
+export SENDER_EMAIL_ID=
+
+# Change this to false, if you want to send actual SMS. SMS charges may apply.
+export TWILIO_DRY_RUN=true
+export TWILIO_ACCOUNT_SID=
+export TWILIO_AUTH_TOKEN=
+export TWILIO_MSG_SVC_ID=
+
+export RELOADLY_SVC_ACCT_API_KEY=</code></pre>
+</div>
+</div>
 </div>
 <div class="sect4">
-<h5 id="running-microservices"><a class="anchor" href="#running-microservices"></a><a class="link" href="#running-microservices">Running Microservices</a></h5>
+<h5 id="running-microservices-2"><a class="anchor" href="#running-microservices-2"></a><a class="link" href="#running-microservices-2">Running Microservices</a></h5>
 <div class="paragraph">
-<p>Run these services in sequence (recommended). You must have done a <code>mvn clean install</code> from the root of your cloned repository. That builds all microservices.</p>
+<p>Run these services in sequence (recommended).
+You must have done a <code>mvn clean install</code> from the root of your cloned repository.
+That builds all microservices.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1360,7 +1450,9 @@ mvn spring-boot:run</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Access the Admin Service Dashboard at <a href="http://localhost:9595/" class="bare">localhost:9595/</a>. You should see the following dashboard once all your services register with the Spring Boot Admin app. You should navigate to the <code>Wallboard</code> tab of the Spring Boot Admin UI.</p>
+<p>Access the Admin Service Dashboard at <a href="http://localhost:9595/" class="bare">localhost:9595/</a>.
+You should see the following dashboard once all your services register with the Spring Boot Admin app.
+You should navigate to the <code>Wallboard</code> tab of the Spring Boot Admin UI.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1368,12 +1460,31 @@ mvn spring-boot:run</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Congratulations! Your services are running.</p>
+<p>Congratulations!
+Your services are running.</p>
 </div>
 <div class="paragraph">
 <p>Now head over to the documentation of individual microservices for more details.</p>
 </div>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cleanup"><a class="anchor" href="#cleanup"></a><a class="link" href="#cleanup">4.3.3. Cleanup</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Shutdown your locally running MySQL instance.</p>
+<div class="literalblock">
+<div class="content">
+<pre>mysql.server stop</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now kill the Kafka process that you had started earlier by hitting <code>CTRL + C</code> in the terminal window where Kafka is running.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1398,13 +1509,16 @@ mvn spring-boot:run</pre>
 <p>The client facing microservices are Authentication, Account and Transaction.</p>
 </li>
 <li>
-<p>The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB. Transaction microservice is this a Kafka Producer.</p>
+<p>The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB.
+Transaction microservice is this a Kafka Producer.</p>
 </li>
 <li>
-<p>The Transaction Processor is a Kafka Consumer and potentially runs a number of instances. All instances are part of a Kafka consumer group.</p>
+<p>The Transaction Processor is a Kafka Consumer and potentially runs a number of instances.
+All instances are part of a Kafka consumer group.</p>
 </li>
 <li>
-<p>Transaction processor updates transaction status once processed. Transactions can be retried.</p>
+<p>Transaction processor updates transaction status once processed.
+Transactions can be retried.</p>
 </li>
 <li>
 <p>Notification microservice is called internally by other microservices and transaction processor.</p>
@@ -1413,7 +1527,9 @@ mvn spring-boot:run</pre>
 <p>Authentication microservice is used to issue JWT tokens, User signup, token verification, API key verification etc.</p>
 </li>
 <li>
-<p>All microservices are secured using Spring Security. Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key. Security infrastructure will validate tokens with Auth service.</p>
+<p>All microservices are secured using Spring Security.
+Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key.
+Security infrastructure will validate tokens with Auth service.</p>
 </li>
 </ul>
 </div>
@@ -1421,7 +1537,9 @@ mvn spring-boot:run</pre>
 <div class="sect2">
 <h3 id="design"><a class="anchor" href="#design"></a><a class="link" href="#design">5.2. Design</a></h3>
 <div class="paragraph">
-<p>The Authentication, Account, Transaction and Notification microservices are Spring Boot applications. Each microservice embrases Domain Driven Design (DDD). Each microservice is responsible for managing data for the domain model it manages.</p>
+<p>The Authentication, Account, Transaction and Notification microservices are Spring Boot applications.
+Each microservice embraces Domain Driven Design (DDD).
+Each microservice is responsible for managing data for the domain model it manages.</p>
 </div>
 <div class="paragraph">
 <p>Additionally, for monitoring, A Spring Boot Admin app is utilized (not shown in illustration above); its optional.</p>
@@ -1440,7 +1558,9 @@ mvn spring-boot:run</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>User signup - Currently username and password based login is supported. Can be extended to other auth channels. Users are issued JWT tokens.</p>
+<p>User signup - Currently username and password based login is supported.
+Can be extended to other auth channels.
+Users are issued JWT tokens.</p>
 </li>
 <li>
 <p>Signup - Users can signup by choosing a username and password.</p>
@@ -1449,148 +1569,474 @@ mvn spring-boot:run</pre>
 <p>Token Verification - Verify JWT tokens.</p>
 </li>
 <li>
-<p>API Key verification and issue functions. API keys are issued to users and service accounts.</p>
+<p>API Key verification and issue functions.
+API keys are issued to users and service accounts.</p>
 </li>
 <li>
-<p>All other microservices call into the Auth Service to validate tokens and API keys. It is a foundational service.</p>
+<p>All other microservices call into the Auth Service to validate tokens and API keys.
+It is a foundational service.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a> when you run your services locally.</p>
+<p>See Swagger UI for API documentation.
+It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a> when you run your services locally.</p>
 </div>
+<div class="sect3">
+<h4 id="api"><a class="anchor" href="#api"></a><a class="link" href="#api">6.1.1. API</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="./images/auth-microservice.png" alt="auth microservice">
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="module-dependencies"><a class="anchor" href="#module-dependencies"></a><a class="link" href="#module-dependencies">6.1.2. Module Dependencies</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/authentication-service-deps.png" alt="authentication service deps">
+</div>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="microservices-acct"><a class="anchor" href="#microservices-acct"></a><a class="link" href="#microservices-acct">6.2. Account Microservice</a></h3>
 <div class="paragraph">
-<p>The Account microservice, allows interacting with Account domain model. Various update and query operations can be performed.</p>
+<p>The Account microservice, allows interacting with Account domain model.
+Various update and query operations can be performed.</p>
 </div>
 <div class="paragraph">
-<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a> when you run your services locally.</p>
+<p>See Swagger UI for API documentation.
+It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a> when you run your services locally.</p>
 </div>
+<div class="sect3">
+<h4 id="api-2"><a class="anchor" href="#api-2"></a><a class="link" href="#api-2">6.2.1. API</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="./images/acct-microservice.png" alt="acct microservice">
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="module-dependencies-2"><a class="anchor" href="#module-dependencies-2"></a><a class="link" href="#module-dependencies-2">6.2.2. Module Dependencies</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/account-service-deps.png" alt="account service deps">
+</div>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="microservices-tx"><a class="anchor" href="#microservices-tx"></a><a class="link" href="#microservices-tx">6.3. Transaction Microservice</a></h3>
-
+<div class="paragraph">
+<p>The Transaction service allows users to initiate user transactions, like money reload and airtime send operations.
+Note that, the transaction service, accepts user requests and posts to a reliable and resilient Kafka cluster.
+It also persists the user request in persistent storage so that that its status can be queries.
+User requests return immediately.
+The transactions posted to Kafka are picked up later asynchronously by the <strong>Transaction Processor</strong> component.</p>
+</div>
+<div class="paragraph">
+<p>See Swagger UI for API documentation.
+It&#8217;s available at <a href="http://localhost:8081/swagger-ui/" class="bare">localhost:8081/swagger-ui/</a> when you run your services locally.</p>
+</div>
+<div class="sect3">
+<h4 id="api-3"><a class="anchor" href="#api-3"></a><a class="link" href="#api-3">6.3.1. API</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/txn-microservice.png" alt="txn microservice">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="module-dependencies-3"><a class="anchor" href="#module-dependencies-3"></a><a class="link" href="#module-dependencies-3">6.3.2. Module Dependencies</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transaction-service-deps.png" alt="transaction service deps">
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="microservices-tx-processor"><a class="anchor" href="#microservices-tx-processor"></a><a class="link" href="#microservices-tx-processor">6.4. Transaction Processor</a></h3>
-
+<div class="paragraph">
+<p>The Transaction Processor is at the heart of the platform and has the responsibility of processing inbound user transactions.
+The transactions could be related to any business functionality, like sending airtime or reloading money into your own account.
+Business operations that are ideally suited to be routed to the transaction processor are those that are potentially expensive and have strict guarantees to fulfill.
+Also, such operations may be retried e.g. a airtime send operation may be retried.</p>
+</div>
+<div class="paragraph">
+<p>The transaction processor listens to transaction requests that are processed to Kafka.
+Part of the objective here is to scale the transaction processing horizontally.
+Kafka listeners(and the transaction processing is one) can for consumer groups.
+Essentially, when the transaction processor is deployed for example to a Kubernetes cluster, one could scale very easily by increasing/decreasing the number of replicas.
+All the other production grade features of Kafka are available by default to the transaction processor.</p>
+</div>
+<div class="paragraph">
+<p>Once the Transaction Processor processes a transaction, it ensures that notifications are sent out to the user so that they know the status of the transaction.</p>
+</div>
+<div class="sect3">
+<h4 id="module-dependencies-4"><a class="anchor" href="#module-dependencies-4"></a><a class="link" href="#module-dependencies-4">6.4.1. Module Dependencies</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/transaction-processor-deps.png" alt="transaction processor deps">
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="microservices-notif"><a class="anchor" href="#microservices-notif"></a><a class="link" href="#microservices-notif">6.5. Notification Microservice</a></h3>
-
+<div class="paragraph">
+<p>The Notification microservice allows sending emails and SMS messages.
+Endpoints are provided for callers to invoke these facilities as REST API calls.</p>
+</div>
+<div class="paragraph">
+<p>For Email, Amazon SES is used.
+For SMS, Twilio is used.
+Other email or SMS providers could be plugged in transparently since the required abstractions exist to easily swap out implementations.</p>
+</div>
+<div class="paragraph">
+<p>See Swagger UI for API documentation.
+It&#8217;s available at <a href="http://localhost:8082/swagger-ui/" class="bare">localhost:8082/swagger-ui/</a> when you run your services locally.</p>
+</div>
+<div class="sect3">
+<h4 id="api-4"><a class="anchor" href="#api-4"></a><a class="link" href="#api-4">6.5.1. API</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/notification-microservice.png" alt="notification microservice">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="module-dependencies-5"><a class="anchor" href="#module-dependencies-5"></a><a class="link" href="#module-dependencies-5">6.5.2. Module Dependencies</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="./images/notification-service-deps.png" alt="notification service deps">
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="components"><a class="anchor" href="#components"></a><a class="link" href="#components">7. Reloadly Modules</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Foundational modules are reusable pieces of software that can be easily integrated in other modules.
+The following modules are used in the rest of the platform.
+Note that, in a Microservices architecture, individual microservices should share reusable code only if makes sense and if sharable code is well managed by a team which keeps pace with others.</p>
+</div>
 <div class="sect2">
 <h3 id="email"><a class="anchor" href="#email"></a><a class="link" href="#email">7.1. Email</a></h3>
-
+<div class="paragraph">
+<p>This module supports email sending facilities.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>email-integration<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This component is configurable.
+See the configuration properties of this module.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="sms"><a class="anchor" href="#sms"></a><a class="link" href="#sms">7.2. SMS</a></h3>
-
+<div class="paragraph">
+<p>This module supports SMS sending facilities.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>sms-integration<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This component is configurable.
+See the configuration properties of this module.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="security-integration"><a class="anchor" href="#security-integration"></a><a class="link" href="#security-integration">7.3. Security Integration</a></h3>
-
+<div class="paragraph">
+<p>This module automatically secures all Web API endpoints with Auth Service security via Spring Security.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>security-integration<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This component is configurable.
+See the configuration properties of this module.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="notification-integration"><a class="anchor" href="#notification-integration"></a><a class="link" href="#notification-integration">7.4. Notification Integration</a></h3>
-
+<div class="paragraph">
+<p>This module integrates Notification Service via an SDK.
+You would not need to make REST API calls to send out notifications, and use a Java API instead.
+The Java API wraps the REST AP calls into the Notification microservice.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>notification-integration<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This component is configurable.
+See the configuration properties of this module.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="swagger-ui-integration"><a class="anchor" href="#swagger-ui-integration"></a><a class="link" href="#swagger-ui-integration">7.5. Swagger UI Integration</a></h3>
-
+<div class="paragraph">
+<p>This module adds Swagger UI integration to any Spring Boot app.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>swagger-ui-integration<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This component is configurable.
+See the configuration properties of this module.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="production-deployment"><a class="anchor" href="#production-deployment"></a><a class="link" href="#production-deployment">8. Production Deployment</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The individual microservices may be run as standalone spring boot applications in lower environments.
+However, for production like environments, where HA, failover and scalability needs exist, a suitable approach may be taken.
+We discuss some aspects and approaches below.</p>
+</div>
 <div class="sect2">
 <h3 id="kubernetes-deployment-eks"><a class="anchor" href="#kubernetes-deployment-eks"></a><a class="link" href="#kubernetes-deployment-eks">8.1. Kubernetes Deployment (EKS)</a></h3>
+<div class="paragraph">
+<p>See this GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues/17">issue</a>.</p>
+</div>
+<div class="paragraph">
+<p>Kubernetes would be the ideal way to run and scale the microservices of this platform.
+Of special interest is the transaction processor which necessarily needs to scale based on transaction volumes.
+Some aspects to note are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s best to keep databases out of Kubernetes.
+Consider having a managed database service from a cloud provider like AWS or GCP.</p>
+</li>
+<li>
+<p>Microservices including the transaction processor should be Dockerized and docker images should be created in the build pipeline.
+Store images in an organizational Docker Registry or a hosted one.</p>
+</li>
+<li>
+<p>Consider a managed Kubernetes Service like Amazon EKS of Google GKE.</p>
+</li>
+</ul>
+</div>
 <div class="sect3">
 <h4 id="docker-images"><a class="anchor" href="#docker-images"></a><a class="link" href="#docker-images">8.1.1. Docker Images</a></h4>
-
+<div class="ulist">
+<ul>
+<li>
+<p>Docker images can be easily created by the Spring Boot maven plugin which currently support creation of Docker images natively.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect3">
 <h4 id="helm-charts"><a class="anchor" href="#helm-charts"></a><a class="link" href="#helm-charts">8.1.2. Helm Charts</a></h4>
-
+<div class="paragraph">
+<p>As a best practice, consider using Helm Charts to easily manage deployments and deployment environments.
+It&#8217;s beneficial to use Helm Charts since it allows for easy rollback.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="aws-beanstalk"><a class="anchor" href="#aws-beanstalk"></a><a class="link" href="#aws-beanstalk">8.2. AWS Beanstalk</a></h3>
-
+<h3 id="aws-beanstalk-or-ec2-containers"><a class="anchor" href="#aws-beanstalk-or-ec2-containers"></a><a class="link" href="#aws-beanstalk-or-ec2-containers">8.2. AWS Beanstalk or EC2 Containers</a></h3>
+<div class="paragraph">
+<p>While deployment to AWS Beanstalk or EC2 containers is possible, it should probably make sense only for small deployments.
+Managing these environments is fraught with errors and do not support automation very well.
+For modern microservice deployment strategies consider using Helm Charts and Kubernetes.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="production-monitoring"><a class="anchor" href="#production-monitoring"></a><a class="link" href="#production-monitoring">9. Production Monitoring</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Production monitoring is a necessary part of operations, and the right tools need to be utilized to get the job done.</p>
+</div>
 <div class="sect2">
 <h3 id="spring-boot-admin"><a class="anchor" href="#spring-boot-admin"></a><a class="link" href="#spring-boot-admin">9.1. Spring Boot Admin</a></h3>
-
+<div class="paragraph">
+<p>This is a great tool to have full visibility into the runtime of Spring Boot Apps over HTTP(S).
+This is currently supported.
+One can easily integrate logfile viewers.
+SBA supports discovery in Kubernetes environments as well.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="grafana"><a class="anchor" href="#grafana"></a><a class="link" href="#grafana">9.2. Grafana</a></h3>
-
+<div class="paragraph">
+<p>See this GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues/22">issue</a>.</p>
+</div>
+<div class="paragraph">
+<p>Grafana provides powerful dashboards that can display any application metrics and other performance parameters sent to it.
+It as excellent integration with Spring and plays well in Kubernetes deployments.
+See <a href="https://grafana.com/" class="bare">grafana.com/</a> for more details.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="prometheus"><a class="anchor" href="#prometheus"></a><a class="link" href="#prometheus">9.3. Prometheus</a></h3>
-
+<div class="paragraph">
+<p>Prometheus is a leading tool to gather metrics from applications and route to Grafana for powerful visualizations.
+Excellent support exists in the Spring ecosystem and it plays well in Kubernetes deployments.
+See <a href="https://prometheus.io/" class="bare">prometheus.io/</a> for more details.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="loki"><a class="anchor" href="#loki"></a><a class="link" href="#loki">9.4. Loki</a></h3>
-
+<div class="paragraph">
+<p>Loki is a popular choice for log aggregation and integrates well with Grafana.
+For more details see <a href="https://grafana.com/oss/loki/" class="bare">grafana.com/oss/loki/</a>.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="product-dev-approach"><a class="anchor" href="#product-dev-approach"></a><a class="link" href="#product-dev-approach">10. Product Development Approach</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Product development in the Microservices world has its benefits, but it needs a certain approach, culture and the appropriate tools.</p>
+</div>
+<div class="paragraph">
+<p>The Microservices paradigm, is part technology and part organizational culture.
+It closely ties with the Agile manifesto.
+Microservices architecture make adequate sense when the size of the business, the organization and the domain justifies it.
+Eventually Microservice boundaries would align with team boundaries.
+That reflects in code organization as well. if these nuances are overlooked, it&#8217;s very easy to get the entire Microservices approach wrong and rack up huge technical debts in the mid to long term.
+Microservices done the right way, with the right team organization and tools will go a long way towards increasing developer productivity and keep operational costs low.</p>
+</div>
 <div class="sect2">
 <h3 id="processes-and-methodology"><a class="anchor" href="#processes-and-methodology"></a><a class="link" href="#processes-and-methodology">10.1. Processes and Methodology</a></h3>
-
+<div class="paragraph">
+<p>Some salient points:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Consider adopting Agile methodology for software development and delivery.</p>
+</li>
+<li>
+<p>Consider aligning team boundaries with Microservice domain boundaries.
+As an example, a dedicated team to work on Account Microservices may be formed.
+This team should own the software development, release planning and deployment for this microservice.
+As a best practice, deployment of this microservice should not have software "build time" dependencies with any other microservice.
+Additionally, the database should be exclusively used by this microservice.</p>
+</li>
+<li>
+<p>Team size should not exceed 5-7 team members with members being full stack engineers.</p>
+</li>
+<li>
+<p>Consider Scrum of Scrums to align all teams well in advance.</p>
+</li>
+<li>
+<p>Scrum meetings (daily standup meetings) may be used.
+However, this is falling out of fashion and may not work very well in distributed agile.
+Also consider effective usage of tools like GitHub issues, Gitter, Discord Server, GitHib Discussions etc.
+These tool go a long way towards increasing productivity.</p>
+</li>
+<li>
+<p>Consider fortnightly software release cycles.</p>
+</li>
+<li>
+<p>Agile Scrum teams are best led by a Project Lead.
+The project lead has the responsibility and authority to manage software, reviews, merging and releasing.
+Each microservice should have a project lead, and a team attached to it.</p>
+</li>
+<li>
+<p>A Product Owner or Product Manager is responsible for managing business requirements and planning.
+A PO can be assigned to multiple logically grouped teams.
+A PO has no authority over engineering teams but fully owns requirements and what should be delivered in a particular release.</p>
+</li>
+<li>
+<p>Consider a culture of merging often and releasing often.</p>
+</li>
+<li>
+<p>Consider automating every single manual process that you can afford to.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="team-culture"><a class="anchor" href="#team-culture"></a><a class="link" href="#team-culture">10.2. Team Culture</a></h3>
-
+<h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">10.2. Tools</a></h3>
+<div class="paragraph">
+<p>Following tools are recommended for their wide adoption, excellent usability and reliability.
+==== Team Communication</p>
 </div>
-<div class="sect2">
-<h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">10.3. Tools</a></h3>
-<div class="sect3">
-<h4 id="team-communication"><a class="anchor" href="#team-communication"></a><a class="link" href="#team-communication">10.3.1. Team Communication</a></h4>
-
-</div>
-<div class="sect3">
-<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.3.2. Defect Management</a></h4>
-
+<div class="paragraph">
+<p>Consider Slack.
+Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.</p>
 </div>
 <div class="sect3">
-<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.3.3. Release Management</a></h4>
-
+<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.2.1. Defect Management</a></h4>
+<div class="paragraph">
+<p>Consider using Jira for defect management, Integrate with Slack.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.3.4. Source Code Management</a></h4>
-
+<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.2.2. Release Management</a></h4>
+<div class="paragraph">
+<p>Consider release planning and management in GitHub.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.3.5. CI/CD and Automation</a></h4>
-
+<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.2.3. Source Code Management</a></h4>
+<div class="paragraph">
+<p>GitHub is the leading platform for DVCS and is recommended.
+It provides a full set of umbrella services suited for moder teams following industry best practices.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.2.4. CI/CD and Automation</a></h4>
+<div class="paragraph">
+<p>Consider GitHub Actions and/or other suitable tools to facilitate depployment to Kubernetes.</p>
+</div>
 </div>
 </div>
 </div>
