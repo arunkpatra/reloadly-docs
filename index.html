@@ -535,7 +535,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="details">
 <span id="author" class="author">Arun Patra</span><br>
 <span id="email" class="email"><a href="https://twitter.com/arunkpatra">@arunkpatra</a></span><br>
-<span id="revnumber">version 1.0.0,</span>
+<span id="revnumber">version 1.1.0,</span>
 <span id="revdate">2021.04.27</span>
 </div>
 <div id="toc" class="toc2">
@@ -544,6 +544,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#introduction">1. Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#source-code">1.1. Source Code</a></li>
+<li><a href="#license">1.2. License</a></li>
 </ul>
 </li>
 <li><a href="#summary-highlights">2. Code Challenge Summary</a></li>
@@ -615,6 +616,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel3">
 <li><a href="#docker-images">8.1.1. Docker Images</a></li>
 <li><a href="#helm-charts">8.1.2. Helm Charts</a></li>
+<li><a href="#service-mesh">8.1.3. Service Mesh</a></li>
+<li><a href="#distributed-tracing">8.1.4. Distributed Tracing</a></li>
 </ul>
 </li>
 <li><a href="#aws-beanstalk-or-ec2-containers">8.2. AWS Beanstalk or EC2 Containers</a></li>
@@ -633,10 +636,11 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#processes-and-methodology">10.1. Processes and Methodology</a></li>
 <li><a href="#tools">10.2. Tools</a>
 <ul class="sectlevel3">
-<li><a href="#defect-management">10.2.1. Defect Management</a></li>
-<li><a href="#release-management">10.2.2. Release Management</a></li>
-<li><a href="#source-code-management">10.2.3. Source Code Management</a></li>
-<li><a href="#cicd-and-automation">10.2.4. CI/CD and Automation</a></li>
+<li><a href="#team-communication">10.2.1. Team Communication</a></li>
+<li><a href="#defect-management">10.2.2. Defect Management</a></li>
+<li><a href="#release-management">10.2.3. Release Management</a></li>
+<li><a href="#source-code-management">10.2.4. Source Code Management</a></li>
+<li><a href="#cicd-and-automation">10.2.5. CI/CD and Automation</a></li>
 </ul>
 </li>
 </ul>
@@ -662,8 +666,7 @@ It was developed as part of a code challenge from <a href="https://www.reloadly.
 <td class="content">
 <div class="paragraph">
 <p>The <strong>reloadly</strong> brand name, and logo are copyright of <a href="https://www.reloadly.com/">Reloadly</a>.
-Permission is hereby granted to <a href="https://www.reloadly.com/">Reloadly</a> to review the architecture, design, source code and documentation of this project.
-Usage of architecture, design, source code is also being granted to <a href="https://www.reloadly.com/">Reloadly</a> without any constraints, including the right to use in building production systems either in whole or part.</p>
+Permission is hereby granted to <a href="https://www.reloadly.com/">Reloadly</a> to review the architecture, design, source code and documentation of this project.</p>
 </div>
 <div class="paragraph">
 <p>Unless required by applicable law or agreed to in writing, this software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
@@ -678,13 +681,19 @@ Usage of architecture, design, source code is also being granted to <a href="htt
 <p><span class="icon"><i class="fa fa-github fa-2x"></i></span> Head over to the GitHub repository <a href="https://github.com/arunkpatra/reloadly-services">here</a>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="license"><a class="anchor" href="#license"></a><a class="link" href="#license">1.2. License</a></h3>
+<div class="paragraph">
+<p>This Software is released under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="summary-highlights"><a class="anchor" href="#summary-highlights"></a><a class="link" href="#summary-highlights">2. Code Challenge Summary</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices.
+<p>This reference implementation embraces modern architectural styles, sound architectural principles and robust engineering practices.
 The following features have been implemented.</p>
 </div>
 <div class="imageblock">
@@ -718,7 +727,7 @@ Please see open issues in GitHub <a href="https://github.com/arunkpatra/reloadly
 <p><strong>~ 1500 lines of code</strong> covered by JUnit tests.</p>
 </li>
 <li>
-<p>Modern tech stack, event driven architecture and solid design principles.</p>
+<p>Modern tech stack, event driven architecture and SOLID design principles.</p>
 </li>
 <li>
 <p>Fully leverages Spring Boot Technology.</p>
@@ -727,7 +736,7 @@ Please see open issues in GitHub <a href="https://github.com/arunkpatra/reloadly
 <p>Advanced Spring Boot features including auto-configuration.</p>
 </li>
 <li>
-<p>Ultra scalable and resilient transaction processor built on Kafka technology.</p>
+<p>Ultra-scalable and resilient transaction processor built on Kafka technology.</p>
 </li>
 <li>
 <p>End to end enterprise security using dedicated Authentication Service designed to be used across the enterprise.</p>
@@ -752,13 +761,13 @@ Create an issue on GitHub <a href="https://github.com/arunkpatra/reloadly-servic
 <div class="sect2">
 <h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a><a class="link" href="#pre-requisites">4.1. Pre-requisites</a></h3>
 <div class="paragraph">
-<p>Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments.
+<p>Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environment.
 The platform has been tested on macOS Big Sur.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Hardware</strong>: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores <em>(16 GB RAM, 8 CPU Cores if you want to do performance testing)</em>.</p>
+<p><strong>Hardware</strong>: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores <em>(16 GB RAM, 8 CPU Cores recommended)</em>.</p>
 </li>
 <li>
 <p><strong>Operating System</strong>: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)</p>
@@ -773,7 +782,7 @@ The platform has been tested on macOS Big Sur.</p>
 <p><strong>Database</strong> - MySQL, locally running or remotely hosted.</p>
 </li>
 <li>
-<p><strong>Kafka</strong> - Local instance with the broker server listening on port 9092. A remotely hosted Kafka cluster is acceptable as well.</p>
+<p><strong>Kafka</strong> - Local instance with the broker server listening on port 9092.</p>
 </li>
 </ol>
 </div>
@@ -813,7 +822,7 @@ Other JDK versions have not been tested.</p>
 <div class="sect2">
 <h3 id="githib-checkout"><a class="anchor" href="#githib-checkout"></a><a class="link" href="#githib-checkout">4.2. Build From Source</a></h3>
 <div class="paragraph">
-<p>Clone the git repository from GitHub into a directory of your choice.</p>
+<p>Clone the git <a href="https://github.com/arunkpatra/reloadly-services">repository</a> from GitHub into a directory of your choice on your local machine.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -852,9 +861,8 @@ For running tests, in-memory instances of these resources are run.</p>
 <div class="sect2">
 <h3 id="running-locally"><a class="anchor" href="#running-locally"></a><a class="link" href="#running-locally">4.3. Development Environment Setup</a></h3>
 <div class="paragraph">
-<p>This is useful, when you want to set a development environment and run all the microservices on a single local machine.
-Kubernetes deployment support is coming up.
-See  <a href="https://github.com/arunkpatra/reloadly-services/issues/17">this GitHub issue</a>.</p>
+<p>This is useful, when you want to setup a development environment and run all the microservices on a single local machine.
+Kubernetes Deployment support is coming up. See  <a href="https://github.com/arunkpatra/reloadly-services/issues/17">this GitHub issue</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -906,7 +914,7 @@ Take a note of the username and password of the admin user; you will need it in 
 </div>
 <div class="paragraph">
 <p>All database tables used by the microservices need to be created upfront in your local MySQL database instance.
-As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.</p>
+As noted earlier, you do not need to set up Kafka and MySQL for running integration tests since tests use in-memory Derby database.</p>
 </div>
 <div class="paragraph">
 <p>Run the following scripts in order.</p>
@@ -1474,6 +1482,9 @@ Your services are running.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
+<p>Kill all microservices by hitting <code>CTRL  + C</code> on the terminal windows where you started the services.</p>
+</li>
+<li>
 <p>Shutdown your locally running MySQL instance.</p>
 <div class="literalblock">
 <div class="content">
@@ -1509,27 +1520,22 @@ Your services are running.</p>
 <p>The client facing microservices are Authentication, Account and Transaction.</p>
 </li>
 <li>
-<p>The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB.
-Transaction microservice is this a Kafka Producer.</p>
+<p>The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB. Transaction microservice is acts as a Kafka Producer.</p>
 </li>
 <li>
-<p>The Transaction Processor is a Kafka Consumer and potentially runs a number of instances.
-All instances are part of a Kafka consumer group.</p>
+<p>The Transaction Processor is a Kafka Consumer and potentially runs a number of instances. All instances of the transaction processor form a Kafka Consumer Group.</p>
 </li>
 <li>
-<p>Transaction processor updates transaction status once processed.
-Transactions can be retried.</p>
+<p>The transaction processor updates transaction status once a transaction is processed. Transactions may be retried.</p>
 </li>
 <li>
-<p>Notification microservice is called internally by other microservices and transaction processor.</p>
+<p>Notification microservice is called internally by other microservices and the transaction processor.</p>
 </li>
 <li>
-<p>Authentication microservice is used to issue JWT tokens, User signup, token verification, API key verification etc.</p>
+<p>Authentication microservice is used to issue JWT tokens, user signup, token verification, API key verification etc.</p>
 </li>
 <li>
-<p>All microservices are secured using Spring Security.
-Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key.
-Security infrastructure will validate tokens with Auth service.</p>
+<p>All microservices are secured using Spring Security. Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key. Security infrastructure validates tokens and API keys with the Auth service.</p>
 </li>
 </ul>
 </div>
@@ -1537,9 +1543,7 @@ Security infrastructure will validate tokens with Auth service.</p>
 <div class="sect2">
 <h3 id="design"><a class="anchor" href="#design"></a><a class="link" href="#design">5.2. Design</a></h3>
 <div class="paragraph">
-<p>The Authentication, Account, Transaction and Notification microservices are Spring Boot applications.
-Each microservice embraces Domain Driven Design (DDD).
-Each microservice is responsible for managing data for the domain model it manages.</p>
+<p>The Authentication, Account, Transaction and Notification microservices are Spring Boot applications. Each microservice embraces Domain Driven Design (DDD) and is responsible for managing data for the domain it owns.</p>
 </div>
 <div class="paragraph">
 <p>Additionally, for monitoring, A Spring Boot Admin app is utilized (not shown in illustration above); its optional.</p>
@@ -1558,32 +1562,24 @@ Each microservice is responsible for managing data for the domain model it manag
 <div class="ulist">
 <ul>
 <li>
-<p>User signup - Currently username and password based login is supported.
-Can be extended to other auth channels.
-Users are issued JWT tokens.</p>
+<p>User signup : Currently username and password based login is supported. This can be extended to other auth channels. Users are issued JWT tokens.</p>
 </li>
 <li>
-<p>Signup - Users can signup by choosing a username and password.</p>
+<p>Token Verification : JWT tokens are verified at the authentication service.</p>
 </li>
 <li>
-<p>Token Verification - Verify JWT tokens.</p>
+<p>API Key verification and issue : API keys are issued to users and service accounts.</p>
 </li>
 <li>
-<p>API Key verification and issue functions.
-API keys are issued to users and service accounts.</p>
-</li>
-<li>
-<p>All other microservices call into the Auth Service to validate tokens and API keys.
-It is a foundational service.</p>
+<p>All other microservices call into the Auth Service to validate tokens and API keys. It is a foundational service.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>See Swagger UI for API documentation.
-It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a> when you run your services locally.</p>
-</div>
 <div class="sect3">
 <h4 id="api"><a class="anchor" href="#api"></a><a class="link" href="#api">6.1.1. API</a></h4>
+<div class="paragraph">
+<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare">localhost:9090/swagger-ui/</a> when you run your services locally.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/auth-microservice.png" alt="auth microservice">
@@ -1602,15 +1598,13 @@ It&#8217;s available at <a href="http://localhost:9090/swagger-ui/" class="bare"
 <div class="sect2">
 <h3 id="microservices-acct"><a class="anchor" href="#microservices-acct"></a><a class="link" href="#microservices-acct">6.2. Account Microservice</a></h3>
 <div class="paragraph">
-<p>The Account microservice, allows interacting with Account domain model.
-Various update and query operations can be performed.</p>
-</div>
-<div class="paragraph">
-<p>See Swagger UI for API documentation.
-It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a> when you run your services locally.</p>
+<p>The Account microservice, allows interacting with the Account domain model. Various update and query operations can be performed.</p>
 </div>
 <div class="sect3">
 <h4 id="api-2"><a class="anchor" href="#api-2"></a><a class="link" href="#api-2">6.2.1. API</a></h4>
+<div class="paragraph">
+<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare">localhost:8080/swagger-ui/</a> when you run your services locally.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/acct-microservice.png" alt="acct microservice">
@@ -1631,16 +1625,15 @@ It&#8217;s available at <a href="http://localhost:8080/swagger-ui/" class="bare"
 <div class="paragraph">
 <p>The Transaction service allows users to initiate user transactions, like money reload and airtime send operations.
 Note that, the transaction service, accepts user requests and posts to a reliable and resilient Kafka cluster.
-It also persists the user request in persistent storage so that that its status can be queries.
-User requests return immediately.
+It also persists the user request in persistent storage so that its status can be queried. User requests return immediately.
 The transactions posted to Kafka are picked up later asynchronously by the <strong>Transaction Processor</strong> component.</p>
 </div>
+<div class="sect3">
+<h4 id="api-3"><a class="anchor" href="#api-3"></a><a class="link" href="#api-3">6.3.1. API</a></h4>
 <div class="paragraph">
 <p>See Swagger UI for API documentation.
 It&#8217;s available at <a href="http://localhost:8081/swagger-ui/" class="bare">localhost:8081/swagger-ui/</a> when you run your services locally.</p>
 </div>
-<div class="sect3">
-<h4 id="api-3"><a class="anchor" href="#api-3"></a><a class="link" href="#api-3">6.3.1. API</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="./images/txn-microservice.png" alt="txn microservice">
@@ -1661,18 +1654,17 @@ It&#8217;s available at <a href="http://localhost:8081/swagger-ui/" class="bare"
 <div class="paragraph">
 <p>The Transaction Processor is at the heart of the platform and has the responsibility of processing inbound user transactions.
 The transactions could be related to any business functionality, like sending airtime or reloading money into your own account.
-Business operations that are ideally suited to be routed to the transaction processor are those that are potentially expensive and have strict guarantees to fulfill.
-Also, such operations may be retried e.g. a airtime send operation may be retried.</p>
+Business operations that are ideally suited to be routed to the transaction processor are those that are potentially expensive and have strict consistency guarantees to fulfill.
+Also, such operations may be retried e.g. an airtime send operation may be retried.</p>
 </div>
 <div class="paragraph">
-<p>The transaction processor listens to transaction requests that are processed to Kafka.
-Part of the objective here is to scale the transaction processing horizontally.
-Kafka listeners(and the transaction processing is one) can for consumer groups.
+<p>The transaction processor listens to transaction requests that are posted to a Kafka topic. Part of the objective here is to scale the transaction processing horizontally.
+Kafka listeners(like the transaction processor) can form Consumer Groups(see Kafka documentation for more details).
 Essentially, when the transaction processor is deployed for example to a Kubernetes cluster, one could scale very easily by increasing/decreasing the number of replicas.
-All the other production grade features of Kafka are available by default to the transaction processor.</p>
+All other production grade features of Kafka are available by default to the transaction processor.</p>
 </div>
 <div class="paragraph">
-<p>Once the Transaction Processor processes a transaction, it ensures that notifications are sent out to the user so that they know the status of the transaction.</p>
+<p>Once the Transaction Processor processes a transaction, it ensures that notifications are sent out to the user who initiated the transaction.</p>
 </div>
 <div class="sect3">
 <h4 id="module-dependencies-4"><a class="anchor" href="#module-dependencies-4"></a><a class="link" href="#module-dependencies-4">6.4.1. Module Dependencies</a></h4>
@@ -1686,20 +1678,16 @@ All the other production grade features of Kafka are available by default to the
 <div class="sect2">
 <h3 id="microservices-notif"><a class="anchor" href="#microservices-notif"></a><a class="link" href="#microservices-notif">6.5. Notification Microservice</a></h3>
 <div class="paragraph">
-<p>The Notification microservice allows sending emails and SMS messages.
-Endpoints are provided for callers to invoke these facilities as REST API calls.</p>
+<p>The Notification microservice allows sending emails and SMS messages. Endpoints are provided for callers to invoke these facilities as REST API calls.</p>
 </div>
 <div class="paragraph">
-<p>For Email, Amazon SES is used.
-For SMS, Twilio is used.
-Other email or SMS providers could be plugged in transparently since the required abstractions exist to easily swap out implementations.</p>
-</div>
-<div class="paragraph">
-<p>See Swagger UI for API documentation.
-It&#8217;s available at <a href="http://localhost:8082/swagger-ui/" class="bare">localhost:8082/swagger-ui/</a> when you run your services locally.</p>
+<p>For Email, Amazon SES is used. For SMS, Twilio is used. Other email or SMS providers could be plugged in transparently since the required abstractions exist to easily swap out implementations.</p>
 </div>
 <div class="sect3">
 <h4 id="api-4"><a class="anchor" href="#api-4"></a><a class="link" href="#api-4">6.5.1. API</a></h4>
+<div class="paragraph">
+<p>See Swagger UI for API documentation. It&#8217;s available at <a href="http://localhost:8082/swagger-ui/" class="bare">localhost:8082/swagger-ui/</a> when you run your services locally.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/notification-microservice.png" alt="notification microservice">
@@ -1721,50 +1709,47 @@ It&#8217;s available at <a href="http://localhost:8082/swagger-ui/" class="bare"
 <h2 id="components"><a class="anchor" href="#components"></a><a class="link" href="#components">7. Reloadly Modules</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Foundational modules are reusable pieces of software that can be easily integrated in other modules.
+<p>Foundational modules are reusable pieces of software that can be easily integrated into other modules.
 The following modules are used in the rest of the platform.
-Note that, in a Microservices architecture, individual microservices should share reusable code only if makes sense and if sharable code is well managed by a team which keeps pace with others.</p>
+Note that, in a Microservices architecture, individual microservices should share reusable code only if it makes sense and if sharable code is well managed by a team which keeps pace with others.</p>
 </div>
 <div class="sect2">
 <h3 id="email"><a class="anchor" href="#email"></a><a class="link" href="#email">7.1. Email</a></h3>
 <div class="paragraph">
 <p>This module supports email sending facilities.
 This is a drop-in solution.
-Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+Add the following dependency in any Spring Boot application and Spring Boot Auto-configuration would wire the necessary beans.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>email-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.1.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This component is configurable.
-See the configuration properties of this module.</p>
+<p>This component is configurable. See the configuration properties of this module.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="sms"><a class="anchor" href="#sms"></a><a class="link" href="#sms">7.2. SMS</a></h3>
 <div class="paragraph">
-<p>This module supports SMS sending facilities.
-This is a drop-in solution.
-Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+<p>This module supports SMS sending facilities. This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Auto-configuration would wire the necessary beans.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>sms-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.1.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This component is configurable.
-See the configuration properties of this module.</p>
+<p>This component is configurable. See the configuration properties of this module.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1772,43 +1757,39 @@ See the configuration properties of this module.</p>
 <div class="paragraph">
 <p>This module automatically secures all Web API endpoints with Auth Service security via Spring Security.
 This is a drop-in solution.
-Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+Add the following dependency in any Spring Boot application and Spring Boot Auto-configuration would wire the necessary beans.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>security-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.1.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This component is configurable.
-See the configuration properties of this module.</p>
+<p>This component is configurable. See the configuration properties of this module.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="notification-integration"><a class="anchor" href="#notification-integration"></a><a class="link" href="#notification-integration">7.4. Notification Integration</a></h3>
 <div class="paragraph">
-<p>This module integrates Notification Service via an SDK.
-You would not need to make REST API calls to send out notifications, and use a Java API instead.
-The Java API wraps the REST AP calls into the Notification microservice.
+<p>This module integrates Notification Service via a Java API. The Java API wraps the Notification Service REST API calls.
 This is a drop-in solution.
-Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+Add the following dependency in any Spring Boot application and Spring Boot Auto-configuration would wire the necessary beans.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>notification-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.1.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This component is configurable.
-See the configuration properties of this module.</p>
+<p>This component is configurable. See the configuration properties of this module.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1816,20 +1797,19 @@ See the configuration properties of this module.</p>
 <div class="paragraph">
 <p>This module adds Swagger UI integration to any Spring Boot app.
 This is a drop-in solution.
-Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.</p>
+Add the following dependency in any Spring Boot application and Spring Boot Auto-configuration would wire the necessary beans.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>swagger-ui-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.0.0<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.1.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This component is configurable.
-See the configuration properties of this module.</p>
+<p>This component is configurable. See the configuration properties of this module.</p>
 </div>
 </div>
 </div>
@@ -1855,7 +1835,7 @@ Some aspects to note are:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>It&#8217;s best to keep databases out of Kubernetes.
+<p>It&#8217;s best to keep databases outside the scope of Kubernetes.
 Consider having a managed database service from a cloud provider like AWS or GCP.</p>
 </li>
 <li>
@@ -1872,7 +1852,7 @@ Store images in an organizational Docker Registry or a hosted one.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Docker images can be easily created by the Spring Boot maven plugin which currently support creation of Docker images natively.</p>
+<p>Docker images can be easily created by the Spring Boot maven plugin which currently supports creation of Docker images natively.</p>
 </li>
 </ul>
 </div>
@@ -1884,13 +1864,25 @@ Store images in an organizational Docker Registry or a hosted one.</p>
 It&#8217;s beneficial to use Helm Charts since it allows for easy rollback.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="service-mesh"><a class="anchor" href="#service-mesh"></a><a class="link" href="#service-mesh">8.1.3. Service Mesh</a></h4>
+<div class="paragraph">
+<p>Consider using <a href="https://istio.io/">Istio</a> or <a href="https://linkerd.io/">Linkerd</a> as a service mesh. This would allow you to handle load balancing, retries and TLS offloading.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="distributed-tracing"><a class="anchor" href="#distributed-tracing"></a><a class="link" href="#distributed-tracing">8.1.4. Distributed Tracing</a></h4>
+<div class="paragraph">
+<p>Consider using <a href="https://www.jaegertracing.io/">Jaeger</a> for distributed tracing. This should serve as a very useful tool in a microservices context.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="aws-beanstalk-or-ec2-containers"><a class="anchor" href="#aws-beanstalk-or-ec2-containers"></a><a class="link" href="#aws-beanstalk-or-ec2-containers">8.2. AWS Beanstalk or EC2 Containers</a></h3>
 <div class="paragraph">
 <p>While deployment to AWS Beanstalk or EC2 containers is possible, it should probably make sense only for small deployments.
 Managing these environments is fraught with errors and do not support automation very well.
-For modern microservice deployment strategies consider using Helm Charts and Kubernetes.</p>
+For modern microservice deployment strategies, consider using Helm Charts and Kubernetes.</p>
 </div>
 </div>
 </div>
@@ -1905,9 +1897,7 @@ For modern microservice deployment strategies consider using Helm Charts and Kub
 <h3 id="spring-boot-admin"><a class="anchor" href="#spring-boot-admin"></a><a class="link" href="#spring-boot-admin">9.1. Spring Boot Admin</a></h3>
 <div class="paragraph">
 <p>This is a great tool to have full visibility into the runtime of Spring Boot Apps over HTTP(S).
-This is currently supported.
-One can easily integrate logfile viewers.
-SBA supports discovery in Kubernetes environments as well.</p>
+This is currently supported. One can easily integrate logfile viewers. SBA supports discovery in Kubernetes environments as well.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1916,16 +1906,15 @@ SBA supports discovery in Kubernetes environments as well.</p>
 <p>See this GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues/22">issue</a>.</p>
 </div>
 <div class="paragraph">
-<p>Grafana provides powerful dashboards that can display any application metrics and other performance parameters sent to it.
-It as excellent integration with Spring and plays well in Kubernetes deployments.
+<p>Grafana provides powerful dashboards that can display any application metrics and other performance parameters sent to it from applications. It has excellent integration with Spring and plays well in Kubernetes deployments.
 See <a href="https://grafana.com/" class="bare">grafana.com/</a> for more details.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="prometheus"><a class="anchor" href="#prometheus"></a><a class="link" href="#prometheus">9.3. Prometheus</a></h3>
 <div class="paragraph">
-<p>Prometheus is a leading tool to gather metrics from applications and route to Grafana for powerful visualizations.
-Excellent support exists in the Spring ecosystem and it plays well in Kubernetes deployments.
+<p>Prometheus is a leading tool for gathering metrics from applications and route them to Grafana for powerful visualizations.
+Excellent support exists in the Spring ecosystem, and it plays well in Kubernetes deployments.
 See <a href="https://prometheus.io/" class="bare">prometheus.io/</a> for more details.</p>
 </div>
 </div>
@@ -1960,14 +1949,14 @@ Microservices done the right way, with the right team organization and tools wil
 <div class="ulist">
 <ul>
 <li>
-<p>Consider adopting Agile methodology for software development and delivery.</p>
+<p>Consider adopting Agile Methodology for software development and delivery.</p>
 </li>
 <li>
 <p>Consider aligning team boundaries with Microservice domain boundaries.
 As an example, a dedicated team to work on Account Microservices may be formed.
 This team should own the software development, release planning and deployment for this microservice.
 As a best practice, deployment of this microservice should not have software "build time" dependencies with any other microservice.
-Additionally, the database should be exclusively used by this microservice.</p>
+Additionally, the database should be exclusively owned and used by this microservice.</p>
 </li>
 <li>
 <p>Team size should not exceed 5-7 team members with members being full stack engineers.</p>
@@ -1977,8 +1966,8 @@ Additionally, the database should be exclusively used by this microservice.</p>
 </li>
 <li>
 <p>Scrum meetings (daily standup meetings) may be used.
-However, this is falling out of fashion and may not work very well in distributed agile.
-Also consider effective usage of tools like GitHub issues, Gitter, Discord Server, GitHib Discussions etc.
+However, this is falling out of fashion and may not work very well in Distributed Agile.
+Also consider effective usage of tools like GitHub Issues, Gitter, Discord Server, GitHib Discussions, Slack etc.
 These tool go a long way towards increasing productivity.</p>
 </li>
 <li>
@@ -2006,36 +1995,36 @@ A PO has no authority over engineering teams but fully owns requirements and wha
 <div class="sect2">
 <h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">10.2. Tools</a></h3>
 <div class="paragraph">
-<p>Following tools are recommended for their wide adoption, excellent usability and reliability.
-==== Team Communication</p>
-</div>
-<div class="paragraph">
-<p>Consider Slack.
-Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.</p>
+<p>Following tools are recommended for their wide adoption, excellent usability and reliability.</p>
 </div>
 <div class="sect3">
-<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.2.1. Defect Management</a></h4>
+<h4 id="team-communication"><a class="anchor" href="#team-communication"></a><a class="link" href="#team-communication">10.2.1. Team Communication</a></h4>
+<div class="paragraph">
+<p>Consider Slack. Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.2.2. Defect Management</a></h4>
 <div class="paragraph">
 <p>Consider using Jira for defect management, Integrate with Slack.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.2.2. Release Management</a></h4>
+<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.2.3. Release Management</a></h4>
 <div class="paragraph">
 <p>Consider release planning and management in GitHub.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.2.3. Source Code Management</a></h4>
+<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.2.4. Source Code Management</a></h4>
 <div class="paragraph">
-<p>GitHub is the leading platform for DVCS and is recommended.
-It provides a full set of umbrella services suited for moder teams following industry best practices.</p>
+<p>GitHub is the leading platform for DVCS and is recommended. It provides a full set of umbrella services suited for modern teams following industry best practices.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.2.4. CI/CD and Automation</a></h4>
+<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.2.5. CI/CD and Automation</a></h4>
 <div class="paragraph">
-<p>Consider GitHub Actions and/or other suitable tools to facilitate depployment to Kubernetes.</p>
+<p>Consider GitHub Actions and/or other suitable tools to facilitate deployment to Kubernetes.</p>
 </div>
 </div>
 </div>
@@ -2044,7 +2033,7 @@ It provides a full set of umbrella services suited for moder teams following ind
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0<br>
+Version 1.1.0<br>
 </div>
 </div>
 </body>
