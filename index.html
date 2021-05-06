@@ -631,16 +631,58 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#loki">9.4. Loki</a></li>
 </ul>
 </li>
-<li><a href="#product-dev-approach">10. Product Development Approach</a>
+<li><a href="#kubernetes-deployment">10. Kubernetes Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#processes-and-methodology">10.1. Processes and Methodology</a></li>
-<li><a href="#tools">10.2. Tools</a>
+<li><a href="#docker-desktop">10.1. Docker Desktop</a>
 <ul class="sectlevel3">
-<li><a href="#team-communication">10.2.1. Team Communication</a></li>
-<li><a href="#defect-management">10.2.2. Defect Management</a></li>
-<li><a href="#release-management">10.2.3. Release Management</a></li>
-<li><a href="#source-code-management">10.2.4. Source Code Management</a></li>
-<li><a href="#cicd-and-automation">10.2.5. CI/CD and Automation</a></li>
+<li><a href="#install">10.1.1. Install</a></li>
+<li><a href="#building-docker-images-and-running">10.1.2. Building Docker Images and Running</a></li>
+</ul>
+</li>
+<li><a href="#kubernetes">10.2. Kubernetes</a>
+<ul class="sectlevel3">
+<li><a href="#install-2">10.2.1. Install</a></li>
+</ul>
+</li>
+<li><a href="#kubernetes-dashboard">10.3. Kubernetes Dashboard</a>
+<ul class="sectlevel3">
+<li><a href="#install-3">10.3.1. Install</a></li>
+<li><a href="#access">10.3.2. Access</a></li>
+<li><a href="#login">10.3.3. Login</a></li>
+</ul>
+</li>
+<li><a href="#linkerd">10.4. Linkerd</a>
+<ul class="sectlevel3">
+<li><a href="#install-4">10.4.1. Install</a></li>
+<li><a href="#run">10.4.2. Run</a></li>
+</ul>
+</li>
+<li><a href="#helm-charts-3">10.5. Helm Charts 3</a>
+<ul class="sectlevel3">
+<li><a href="#mysql-install">10.5.1. MySQL Install</a></li>
+<li><a href="#mysql-cleanup">10.5.2. MySQL Cleanup</a></li>
+<li><a href="#kafka-install">10.5.3. Kafka Install</a></li>
+<li><a href="#kafka-cleanup">10.5.4. Kafka Cleanup</a></li>
+</ul>
+</li>
+<li><a href="#running-reloadly-platform-services-on-kubernetes">10.6. Running Reloadly Platform Services on Kubernetes</a></li>
+<li><a href="#jaeger">10.7. Jaeger</a>
+<ul class="sectlevel3">
+<li><a href="#install-5">10.7.1. Install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#product-dev-approach">11. Product Development Approach</a>
+<ul class="sectlevel2">
+<li><a href="#processes-and-methodology">11.1. Processes and Methodology</a></li>
+<li><a href="#tools">11.2. Tools</a>
+<ul class="sectlevel3">
+<li><a href="#team-communication">11.2.1. Team Communication</a></li>
+<li><a href="#defect-management">11.2.2. Defect Management</a></li>
+<li><a href="#release-management">11.2.3. Release Management</a></li>
+<li><a href="#source-code-management">11.2.4. Source Code Management</a></li>
+<li><a href="#cicd-and-automation">11.2.5. CI/CD and Automation</a></li>
 </ul>
 </li>
 </ul>
@@ -1828,6 +1870,9 @@ We discuss some aspects and approaches below.</p>
 <p>See this GitHub <a href="https://github.com/arunkpatra/reloadly-services/issues/17">issue</a>.</p>
 </div>
 <div class="paragraph">
+<p>See the  <a href="#kubernetes-deployment">Kubernetes Deployment</a> chapter for more details.</p>
+</div>
+<div class="paragraph">
 <p>Kubernetes would be the ideal way to run and scale the microservices of this platform.
 Of special interest is the transaction processor which necessarily needs to scale based on transaction volumes.
 Some aspects to note are:</p>
@@ -1849,12 +1894,30 @@ Store images in an organizational Docker Registry or a hosted one.</p>
 </div>
 <div class="sect3">
 <h4 id="docker-images"><a class="anchor" href="#docker-images"></a><a class="link" href="#docker-images">8.1.1. Docker Images</a></h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Docker images can be easily created by the Spring Boot maven plugin which currently supports creation of Docker images natively.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>To create Docker images, follow these steps. First install Docker Desktop for macOS.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd account-service
+docker build --tag reloadly/account-service .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To spin up a container, issue the following command. First start your MySQL instance on your local machine and ensure that the tables are created.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run -it -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To launch in the background:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run -d -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env</pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1928,7 +1991,473 @@ For more details see <a href="https://grafana.com/oss/loki/" class="bare">grafan
 </div>
 </div>
 <div class="sect1">
-<h2 id="product-dev-approach"><a class="anchor" href="#product-dev-approach"></a><a class="link" href="#product-dev-approach">10. Product Development Approach</a></h2>
+<h2 id="kubernetes-deployment"><a class="anchor" href="#kubernetes-deployment"></a><a class="link" href="#kubernetes-deployment">10. Kubernetes Deployment</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter is dedicated to containerized deployments. We will need a number of components. We will start with simpler aspects and will finally achieve full automation.</p>
+</div>
+<div class="paragraph">
+<p>This chapter is targeted to developers. Some familiarity with Containerization technology, Docker and Kubernetes is helpful, but not mandatory.</p>
+</div>
+<div class="sect2">
+<h3 id="docker-desktop"><a class="anchor" href="#docker-desktop"></a><a class="link" href="#docker-desktop">10.1. Docker Desktop</a></h3>
+<div class="paragraph">
+<p>You can always run the microservices developed in this project as standalone Spring Boot applications. Alternatively, you can create Docker images for each microservice, like the Account microservice, Transaction Processor etc. Once you create a docker image, you can launch a container that will run your docker image. First, you need to install Docker Desktop on your local machine.</p>
+</div>
+<div class="sect3">
+<h4 id="install"><a class="anchor" href="#install"></a><a class="link" href="#install">10.1.1. Install</a></h4>
+<div class="paragraph">
+<p>On macOS systems, install Docker Desktop by following the instructions <a href="https://docs.docker.com/docker-for-mac/install/">here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="building-docker-images-and-running"><a class="anchor" href="#building-docker-images-and-running"></a><a class="link" href="#building-docker-images-and-running">10.1.2. Building Docker Images and Running</a></h4>
+<div class="paragraph">
+<p>After you install Docker Desktop, start it. The following example shows how to build a Docker image for a microservice and run the service.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd account-service
+docker build --tag reloadly/account-service .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To spin up a container, issue the following command. First start your MySQL instance on your local machine and ensure that the tables are created.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run -it -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To launch in the background:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run -d -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kubernetes"><a class="anchor" href="#kubernetes"></a><a class="link" href="#kubernetes">10.2. Kubernetes</a></h3>
+<div class="sect3">
+<h4 id="install-2"><a class="anchor" href="#install-2"></a><a class="link" href="#install-2">10.2.1. Install</a></h4>
+<div class="paragraph">
+<p>When you install Docker Desktop, it also brings in Kubernetes, but is not enabled yet. Enable Kubernetes from the Docker Desktop Settings.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/docker-desktop-k8s-settings.png" alt="docker desktop k8s settings">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kubernetes-dashboard"><a class="anchor" href="#kubernetes-dashboard"></a><a class="link" href="#kubernetes-dashboard">10.3. Kubernetes Dashboard</a></h3>
+<div class="paragraph">
+<p>The first thing you might want to do is to install <a href="https://github.com/kubernetes/dashboard">Kubernetes Dashboard</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="install-3"><a class="anchor" href="#install-3"></a><a class="link" href="#install-3">10.3.1. Install</a></h4>
+<div class="paragraph">
+<p>To deploy Dashboard, execute following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="access"><a class="anchor" href="#access"></a><a class="link" href="#access">10.3.2. Access</a></h4>
+<div class="paragraph">
+<p>To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kubectl proxy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now access Dashboard at:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/" class="bare">localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="login"><a class="anchor" href="#login"></a><a class="link" href="#login">10.3.3. Login</a></h4>
+<div class="paragraph">
+<p>To login to the dashboard, you would need a token. See instructions <a href="https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md">here</a></p>
+</div>
+<div class="paragraph">
+<p>Start Proxy</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kubectl proxy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Get Token</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/k8s-dashboard.png" alt="k8s dashboard">
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a helpful <a href="https://andrewlock.net/running-kubernetes-and-the-dashboard-with-docker-desktop/">tutorial</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="linkerd"><a class="anchor" href="#linkerd"></a><a class="link" href="#linkerd">10.4. Linkerd</a></h3>
+<div class="sect3">
+<h4 id="install-4"><a class="anchor" href="#install-4"></a><a class="link" href="#install-4">10.4.1. Install</a></h4>
+<div class="paragraph">
+<p>Install Linkerd using the instruction <a href="https://linkerd.io/2.10/getting-started/">here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="run"><a class="anchor" href="#run"></a><a class="link" href="#run">10.4.2. Run</a></h4>
+<div class="paragraph">
+<p>Start Linkerd Dashboard.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>linkerd viz dashboard &amp;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Access Linkerd dashboard at <a href="http://localhost:50750/" class="bare">localhost:50750/</a></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="helm-charts-3"><a class="anchor" href="#helm-charts-3"></a><a class="link" href="#helm-charts-3">10.5. Helm Charts 3</a></h3>
+<div class="paragraph">
+<p>You can use Helm Charts to install software on your K8s cluster.</p>
+</div>
+<div class="sect3">
+<h4 id="mysql-install"><a class="anchor" href="#mysql-install"></a><a class="link" href="#mysql-install">10.5.1. MySQL Install</a></h4>
+<div class="paragraph">
+<p>See the chart documentation <a href="https://bitnami.com/stack/mysql/helm">here</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install MySQL in your K8s Cluster, by issuing the following command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=NodePort,primary.service.nodePort=30306 bitnami/mysql --namespace mysql --create-namespace --dry-run</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The usage of the <code>--dry-run</code> parameter, just lets you know what actions will be performed by the Chart. You need to execute the chart again without the <code>--dry-run</code> parameter to perform the actual installation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Now go ahead and execute for real.</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To know the status of the deployment, issue the following command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm status mysql --namespace mysql</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To see the pods created by the chart deployment:</p>
+<div class="literalblock">
+<div class="content">
+<pre>kubectl get pods  --namespace mysql</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Startup a container for your mySQL client that will be used to connect to the MySQL server that you just provisioned on yuur K8s cluster. It will be deleted when you log out.</p>
+<div class="literalblock">
+<div class="content">
+<pre>kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.24-debian-10-r0 --namespace mysql --command -- bash</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now login into your instance. You will be prompted for the root password. Use the one that you selected while deploying the chart.</p>
+<div class="literalblock">
+<div class="content">
+<pre>mysql -h mysql.mysql.svc.cluster.local -uroot -p my_database</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now execute all the database scripts mentioned in the Getting Started section.</p>
+</li>
+<li>
+<p>Issue the <code>SHOW DATABASES</code> command to list the databases that got created.</p>
+<div class="literalblock">
+<div class="content">
+<pre>mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my_database        |
+| mysql              |
+| performance_schema |
+| rlacctdb           |
+| rlauthdb           |
+| rltxndb            |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Quit out of the client by issuing a <code>quit;</code> and the <code>exit</code> out of your mySQL client container.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>At this point you have a fully functional MySQL Server containing all the application databases(or Schemas) that you need. Your seed data is up there as well. Here are some salient points about the MySQL Server that got provisioned.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Your mySQL server will be accessible in your K8s cluster with the <code>mysql.mysql.svc.cluster.local</code>. Port os <code>3306</code>.</p>
+</li>
+<li>
+<p>Root user is <code>root</code>. Root password is <code>mysqlpass123</code>.</p>
+</li>
+<li>
+<p>You could access this database from your local machine at <code>localhost:30306</code> using any MySQL client of your choice. This is possible since you chose <code>NodePort</code> to be the K8s <code>ServiceType</code> while deploying your Helm chart.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="mysql-cleanup"><a class="anchor" href="#mysql-cleanup"></a><a class="link" href="#mysql-cleanup">10.5.2. MySQL Cleanup</a></h4>
+<div class="paragraph">
+<p>When you no longer need this MySQL server, you can delete the resources just created:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>helm uninstall mysql -n mysql</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above deletes all resources except the persistent volumes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kafka-install"><a class="anchor" href="#kafka-install"></a><a class="link" href="#kafka-install">10.5.3. Kafka Install</a></h4>
+<div class="paragraph">
+<p>See the chart documentation <a href="https://github.com/bitnami/charts/tree/master/bitnami/kafka">here</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install kafka in your K8s Cluster, by issuing the following command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install kafka bitnami/kafka --namespace kafka --create-namespace --dry-run</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The usage of the <code>--dry-run</code> parameter, just lets you know what actions will be performed by the Chart. You need to execute the chart again without the <code>--dry-run</code> parameter to perform the actual installation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Now go ahead and execute for real.</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm install kafka --set bitnami/kafka --namespace kafka --create-namespace</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To know the status of the deployment, issue the following command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>helm status kafka --namespace kafka</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To see the pods created by the chart deployment:</p>
+<div class="literalblock">
+<div class="content">
+<pre>kubectl get pods  --namespace kafka</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now start a client container</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To create a pod that you can use as a Kafka client run the following commands:</p>
+<div class="literalblock">
+<div class="content">
+<pre># Create client container
+$ kubectl run kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.0-debian-10-r0 --namespace kafka --command -- sleep infinity
+# Connect to client container
+kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now put a message. Type some text when you see the <code>&gt;</code> prompt and then hit the <code>ENTER</code> key. After that hit <code>CTRL + C</code> button.</p>
+<div class="literalblock">
+<div class="content">
+<pre>kafka-console-producer.sh --broker-list kafka.kafka.svc.cluster.local:9092 --topic test</pre>
+</div>
+</div>
+</li>
+<li>
+<p>No read messages.</p>
+<div class="literalblock">
+<div class="content">
+<pre>kafka-console-consumer.sh --bootstrap-server kafka.kafka.svc.cluster.local:9092 --topic test --from-beginning</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>At this point you have a fully functional Kafka installation. Here are some salient points about the Kafka installation that got provisioned.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster: <code>kafka.kafka.svc.cluster.local</code>. Port is <code>9092</code>.</p>
+</li>
+<li>
+<p><code>PLAINTEXT</code> protocol is enabled, so that messages can be sent without security. This is strongly discouraged in any environment other than local testing.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kafka-cleanup"><a class="anchor" href="#kafka-cleanup"></a><a class="link" href="#kafka-cleanup">10.5.4. Kafka Cleanup</a></h4>
+<div class="paragraph">
+<p>When you no longer need this Kafka installation, you can delete the resources just created:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>helm uninstall kafka -n kafka</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above deletes all resources except the persistent volumes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-reloadly-platform-services-on-kubernetes"><a class="anchor" href="#running-reloadly-platform-services-on-kubernetes"></a><a class="link" href="#running-reloadly-platform-services-on-kubernetes">10.6. Running Reloadly Platform Services on Kubernetes</a></h3>
+<div class="paragraph">
+<p>From root of project root, issue the following commands.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>This will install the reloadly microservices in your locally running K8s cluster.</p>
+<div class="literalblock">
+<div class="content">
+<pre>cd deployment
+kubectl apply -f ./kubernetes/reloadly-platform.yaml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check Pod initialization status.</p>
+<div class="literalblock">
+<div class="content">
+<pre>kubectl get pods -n reloadly</pre>
+</div>
+</div>
+</li>
+<li>
+<p>You should see output like:</p>
+<div class="literalblock">
+<div class="content">
+<pre>NAME                            READY   STATUS    RESTARTS   AGE
+admin-service-6d897557d-v6b27   2/2     Running   0          2m29s</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jaeger"><a class="anchor" href="#jaeger"></a><a class="link" href="#jaeger">10.7. Jaeger</a></h3>
+<div class="sect3">
+<h4 id="install-5"><a class="anchor" href="#install-5"></a><a class="link" href="#install-5">10.7.1. Install</a></h4>
+<div class="paragraph">
+<p>Reference: <a href="https://linkerd.io/2.10/tasks/distributed-tracing/" class="bare">linkerd.io/2.10/tasks/distributed-tracing/</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>linkerd jaeger install | kubectl apply -f -
+linkerd jaeger check
+linkerd jaeger dashboard</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="product-dev-approach"><a class="anchor" href="#product-dev-approach"></a><a class="link" href="#product-dev-approach">11. Product Development Approach</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Product development in the Microservices world has its benefits, but it needs a certain approach, culture and the appropriate tools.</p>
@@ -1942,7 +2471,7 @@ That reflects in code organization as well. if these nuances are overlooked, it&
 Microservices done the right way, with the right team organization and tools will go a long way towards increasing developer productivity and keep operational costs low.</p>
 </div>
 <div class="sect2">
-<h3 id="processes-and-methodology"><a class="anchor" href="#processes-and-methodology"></a><a class="link" href="#processes-and-methodology">10.1. Processes and Methodology</a></h3>
+<h3 id="processes-and-methodology"><a class="anchor" href="#processes-and-methodology"></a><a class="link" href="#processes-and-methodology">11.1. Processes and Methodology</a></h3>
 <div class="paragraph">
 <p>Some salient points:</p>
 </div>
@@ -1993,36 +2522,36 @@ A PO has no authority over engineering teams but fully owns requirements and wha
 </div>
 </div>
 <div class="sect2">
-<h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">10.2. Tools</a></h3>
+<h3 id="tools"><a class="anchor" href="#tools"></a><a class="link" href="#tools">11.2. Tools</a></h3>
 <div class="paragraph">
 <p>Following tools are recommended for their wide adoption, excellent usability and reliability.</p>
 </div>
 <div class="sect3">
-<h4 id="team-communication"><a class="anchor" href="#team-communication"></a><a class="link" href="#team-communication">10.2.1. Team Communication</a></h4>
+<h4 id="team-communication"><a class="anchor" href="#team-communication"></a><a class="link" href="#team-communication">11.2.1. Team Communication</a></h4>
 <div class="paragraph">
 <p>Consider Slack. Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">10.2.2. Defect Management</a></h4>
+<h4 id="defect-management"><a class="anchor" href="#defect-management"></a><a class="link" href="#defect-management">11.2.2. Defect Management</a></h4>
 <div class="paragraph">
 <p>Consider using Jira for defect management, Integrate with Slack.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">10.2.3. Release Management</a></h4>
+<h4 id="release-management"><a class="anchor" href="#release-management"></a><a class="link" href="#release-management">11.2.3. Release Management</a></h4>
 <div class="paragraph">
 <p>Consider release planning and management in GitHub.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">10.2.4. Source Code Management</a></h4>
+<h4 id="source-code-management"><a class="anchor" href="#source-code-management"></a><a class="link" href="#source-code-management">11.2.4. Source Code Management</a></h4>
 <div class="paragraph">
 <p>GitHub is the leading platform for DVCS and is recommended. It provides a full set of umbrella services suited for modern teams following industry best practices.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">10.2.5. CI/CD and Automation</a></h4>
+<h4 id="cicd-and-automation"><a class="anchor" href="#cicd-and-automation"></a><a class="link" href="#cicd-and-automation">11.2.5. CI/CD and Automation</a></h4>
 <div class="paragraph">
 <p>Consider GitHub Actions and/or other suitable tools to facilitate deployment to Kubernetes.</p>
 </div>
