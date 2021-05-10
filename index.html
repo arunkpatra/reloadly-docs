@@ -2414,7 +2414,9 @@ kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
 <div class="literalblock">
 <div class="content">
 <pre>cd deployment
-kubectl apply -f ./kubernetes/reloadly-platform.yaml</pre>
+kubectl apply -f ./kubernetes/reloadly-platform.yaml
+# OR source the manifest directly from GitHub
+kubectl apply -f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/reloadly-platform.yaml</pre>
 </div>
 </div>
 </li>
@@ -2440,7 +2442,9 @@ admin-service-6d897557d-v6b27   2/2     Running   0          2m29s</pre>
 <div class="literalblock">
 <div class="content">
 <pre>cd deployment
-kubectl delete -f ./kubernetes/reloadly-platform.yaml</pre>
+kubectl delete -f ./kubernetes/reloadly-platform.yaml
+# source the manifest directly from GitHub
+kubectl delete - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/reloadly-platform.yaml</pre>
 </div>
 </div>
 </li>
