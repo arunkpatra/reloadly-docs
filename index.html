@@ -2183,7 +2183,7 @@ helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=Nod
 <p>Now go ahead and execute for real.</p>
 <div class="literalblock">
 <div class="content">
-<pre>helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace</pre>
+<pre>helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=NodePort,primary.service.nodePort=30306 bitnami/mysql --namespace mysql --create-namespace</pre>
 </div>
 </div>
 </li>
@@ -2317,7 +2317,7 @@ helm install kafka bitnami/kafka --namespace kafka --create-namespace --dry-run<
 <p>Now go ahead and execute for real.</p>
 <div class="literalblock">
 <div class="content">
-<pre>helm install kafka --set bitnami/kafka --namespace kafka --create-namespace</pre>
+<pre>helm install kafka bitnami/kafka --namespace kafka --create-namespace</pre>
 </div>
 </div>
 </li>
@@ -2432,6 +2432,15 @@ kubectl apply -f ./kubernetes/reloadly-platform.yaml</pre>
 <div class="content">
 <pre>NAME                            READY   STATUS    RESTARTS   AGE
 admin-service-6d897557d-v6b27   2/2     Running   0          2m29s</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To uninstall all the services, issue the following commands from root of project directory:</p>
+<div class="literalblock">
+<div class="content">
+<pre>cd deployment
+kubectl delete -f ./kubernetes/reloadly-platform.yaml</pre>
 </div>
 </div>
 </li>
