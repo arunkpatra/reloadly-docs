@@ -535,8 +535,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="details">
 <span id="author" class="author">Arun Patra</span><br>
 <span id="email" class="email"><a href="https://twitter.com/arunkpatra">@arunkpatra</a></span><br>
-<span id="revnumber">version 1.3.0-SNAPSHOT,</span>
-<span id="revdate">2021.04.27</span>
+<span id="revnumber">version 1.3.0,</span>
+<span id="revdate">2021-05-15T15:01:41Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -656,17 +656,14 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel3">
 <li><a href="#install-4">10.4.1. Install</a></li>
 <li><a href="#run">10.4.2. Run</a></li>
+<li><a href="#mysql-install">10.4.3. MySQL Install</a></li>
+<li><a href="#mysql-cleanup">10.4.4. MySQL Cleanup</a></li>
+<li><a href="#kafka-install">10.4.5. Kafka Install</a></li>
+<li><a href="#kafka-cleanup">10.4.6. Kafka Cleanup</a></li>
 </ul>
 </li>
-<li><a href="#helm-charts-3">10.5. Helm Charts 3</a>
-<ul class="sectlevel3">
-<li><a href="#mysql-install">10.5.1. MySQL Install</a></li>
-<li><a href="#mysql-cleanup">10.5.2. MySQL Cleanup</a></li>
-<li><a href="#kafka-install">10.5.3. Kafka Install</a></li>
-<li><a href="#kafka-cleanup">10.5.4. Kafka Cleanup</a></li>
-</ul>
-</li>
-<li><a href="#running-reloadly-platform-services-on-kubernetes">10.6. Running Reloadly Platform Services on Kubernetes</a></li>
+<li><a href="#running-services-on-kubernetes">10.5. Running Reloadly Platform Services on Kubernetes</a></li>
+<li><a href="#running-services-on-kubernetes-using-helm">10.6. Helm Charts 3</a></li>
 <li><a href="#jaeger">10.7. Jaeger</a>
 <ul class="sectlevel3">
 <li><a href="#install-5">10.7.1. Install</a></li>
@@ -1025,15 +1022,32 @@ CREATE TABLE username_password_table</span>
             <span class="keyword">REFERENCES</span> user_table (uid)
 );
 
-<span class="class">create</span> <span class="type">TABLE</span> api_key_table
+<span class="comment">--
+-- Client ID table</span>
+<span class="comment">--
+create TABLE client_id_table</span>
 (
-    id      <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
-    uid     <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
-    api_key <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
-    active  <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>,
-    <span class="type">CONSTRAINT</span> fk_api_key_table_uid_user_table
+    id        <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    uid       <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    client_id <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    <span class="type">CONSTRAINT</span> fk_client_id_table_uid_user_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (uid)
             <span class="keyword">REFERENCES</span> user_table (uid)
+);
+
+<span class="comment">--
+-- API Key table</span>
+<span class="comment">--
+create TABLE api_key_table</span>
+(
+    id           <span class="predefined-type">BIGINT</span> <span class="directive">AUTO_INCREMENT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">PRIMARY</span> <span class="type">KEY</span>,
+    client_id    <span class="predefined-type">VARCHAR</span>(<span class="integer">40</span>)  <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    api_key      <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span> <span class="directive">UNIQUE</span>,
+    api_key_desc <span class="predefined-type">VARCHAR</span>(<span class="integer">128</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    active       <span class="predefined-type">BOOLEAN</span> <span class="directive">DEFAULT</span> <span class="predefined-constant">true</span>,
+    <span class="type">CONSTRAINT</span> fk_api_key_table_client_id_client_id_table
+        <span class="directive">FOREIGN</span> <span class="type">KEY</span> (client_id)
+            <span class="keyword">REFERENCES</span> client_id_table (client_id)
 )</code></pre>
 </div>
 </div>
@@ -1162,7 +1176,8 @@ CREATE TABLE transaction_table</span>
 <h6 id="seed-data"><a class="anchor" href="#seed-data"></a><a class="link" href="#seed-data">Seed Data</a></h6>
 <div class="paragraph">
 <p>This data must be seeded into the DB for system to work correctly.
-It does nothing other than ading a service account and API key which is needed for inter-microservice communication.</p>
+It does nothing other than adding a service account, and an API key which is needed for inter-microservice communication.
+The unencrypted value (for testing only) of the API key is <em>test-api-key</em>. Also note the <code>client_id</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1199,10 +1214,16 @@ INSERT INTO username_password_table(user_name, password, uid)</span>
         <span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>);
 
 <span class="comment">--
--- API Key issued to 'reloadly_svc_acct' service account.</span>
+-- Client ID for service account</span>
 <span class="comment">--
-INSERT INTO api_key_table(uid, api_key, active)</span>
-<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">d3fe6f0d-120e-4161-a134-8c2342e36ca6</span><span class="delimiter">'</span></span>, <span class="predefined-constant">true</span>);</code></pre>
+INSERT INTO client_id_table(uid, client_id)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">c1fe6f0d-420e-4161-a134-9c2342e36c95</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">bafa4494-40dd-4b0c-b42e-623399e70533</span><span class="delimiter">'</span></span>);
+
+<span class="comment">--
+-- API Key issued to 'reloadly_svc_acct' service account. Un-encrypted API key is 'test-api-key'</span>
+<span class="comment">--
+INSERT INTO api_key_table(client_id, api_key, api_key_desc, active)</span>
+<span class="keyword">VALUES</span> (<span class="string"><span class="delimiter">'</span><span class="content">bafa4494-40dd-4b0c-b42e-623399e70533</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">$2a$10$C3nQIBaKAixaJHQtTUj/8eoT487qd7vwq4ZRHFQYVla6Z.fQOx0YG</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Test API key</span><span class="delimiter">'</span></span>, <span class="predefined-constant">true</span>);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1261,7 +1282,7 @@ Please refer Kafka documentation for securing a Kafka installation.</p>
 <h4 id="running-microservices"><a class="anchor" href="#running-microservices"></a><a class="link" href="#running-microservices">4.3.2. Running Microservices</a></h4>
 <div class="paragraph">
 <p>Follow the steps listed below in order to run all components of the platform locally.
-You should folow these steps sequentially.</p>
+You should follow these steps sequentially. The steps mentioned below run the services as spring boot apps. However, you could run all these services in a Kubernetes cluster as described in <a href="#running-services-on-kubernetes">this section</a>. A convenient Helm Chart is provided and is described in <a href="#running-services-on-kubernetes-using-helm">this section.</a></p>
 </div>
 <div class="sect4">
 <h5 id="environment-variable-configuration"><a class="anchor" href="#environment-variable-configuration"></a><a class="link" href="#environment-variable-configuration">Environment Variable Configuration</a></h5>
@@ -1345,11 +1366,18 @@ Get it from your Twilio account.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Needed to send SMS via Twilio.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELOADLY_CLIENT_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The reloadly service account client ID.
+Use the value you inserted in the <a href="#seed-data">Seed Data</a> section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needed for the platform to work correctly.
+Use the value of <code>client_id</code> from the final <code>INSERT</code> statement in that script. (This is for testing only; should not be used for production)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RELOADLY_SVC_ACCT_API_KEY</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The reloadly service account API key.
 Use the value you inserted in the <a href="#seed-data">Seed Data</a> section.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Needed for the platform to work correctly.
-Use the <code>api-key</code> value from the final <code>INSERT</code> statement in that script.</p></td>
+Use the unencrypted value of <code>api-key</code> from the final <code>INSERT</code> statement in that script. The pre-seeded value is <em>test-api-key</em>. (This is for testing only; should not be used for production)</p></td>
 </tr>
 </tbody>
 </table>
@@ -1391,7 +1419,7 @@ export TWILIO_DRY_RUN=true
 export TWILIO_ACCOUNT_SID=
 export TWILIO_AUTH_TOKEN=
 export TWILIO_MSG_SVC_ID=
-
+export RELOADLY_CLIENT_ID=
 export RELOADLY_SVC_ACCT_API_KEY=</code></pre>
 </div>
 </div>
@@ -1768,7 +1796,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>email-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -1787,7 +1815,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>sms-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -1807,7 +1835,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>security-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -1827,7 +1855,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>notification-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -1847,7 +1875,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>swagger-ui-integration<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -1867,7 +1895,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>com.reloadly<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>tracing<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>1.3.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.3.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
@@ -2198,14 +2226,8 @@ docker build --tag reloadly/account-service .</pre>
 <p>Access Linkerd dashboard at <a href="http://localhost:50750/" class="bare">localhost:50750/</a></p>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="helm-charts-3"><a class="anchor" href="#helm-charts-3"></a><a class="link" href="#helm-charts-3">10.5. Helm Charts 3</a></h3>
-<div class="paragraph">
-<p>You can use Helm Charts to install software on your K8s cluster.</p>
-</div>
 <div class="sect3">
-<h4 id="mysql-install"><a class="anchor" href="#mysql-install"></a><a class="link" href="#mysql-install">10.5.1. MySQL Install</a></h4>
+<h4 id="mysql-install"><a class="anchor" href="#mysql-install"></a><a class="link" href="#mysql-install">10.4.3. MySQL Install</a></h4>
 <div class="paragraph">
 <p>See the chart documentation <a href="https://bitnami.com/stack/mysql/helm">here</a>.</p>
 </div>
@@ -2325,7 +2347,7 @@ helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=Nod
 </div>
 </div>
 <div class="sect3">
-<h4 id="mysql-cleanup"><a class="anchor" href="#mysql-cleanup"></a><a class="link" href="#mysql-cleanup">10.5.2. MySQL Cleanup</a></h4>
+<h4 id="mysql-cleanup"><a class="anchor" href="#mysql-cleanup"></a><a class="link" href="#mysql-cleanup">10.4.4. MySQL Cleanup</a></h4>
 <div class="paragraph">
 <p>When you no longer need this MySQL server, you can delete the resources just created:</p>
 </div>
@@ -2339,7 +2361,7 @@ helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=Nod
 </div>
 </div>
 <div class="sect3">
-<h4 id="kafka-install"><a class="anchor" href="#kafka-install"></a><a class="link" href="#kafka-install">10.5.3. Kafka Install</a></h4>
+<h4 id="kafka-install"><a class="anchor" href="#kafka-install"></a><a class="link" href="#kafka-install">10.4.5. Kafka Install</a></h4>
 <div class="paragraph">
 <p>See the chart documentation <a href="https://github.com/bitnami/charts/tree/master/bitnami/kafka">here</a>.</p>
 </div>
@@ -2447,7 +2469,7 @@ kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kafka-cleanup"><a class="anchor" href="#kafka-cleanup"></a><a class="link" href="#kafka-cleanup">10.5.4. Kafka Cleanup</a></h4>
+<h4 id="kafka-cleanup"><a class="anchor" href="#kafka-cleanup"></a><a class="link" href="#kafka-cleanup">10.4.6. Kafka Cleanup</a></h4>
 <div class="paragraph">
 <p>When you no longer need this Kafka installation, you can delete the resources just created:</p>
 </div>
@@ -2462,7 +2484,7 @@ kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="running-reloadly-platform-services-on-kubernetes"><a class="anchor" href="#running-reloadly-platform-services-on-kubernetes"></a><a class="link" href="#running-reloadly-platform-services-on-kubernetes">10.6. Running Reloadly Platform Services on Kubernetes</a></h3>
+<h3 id="running-services-on-kubernetes"><a class="anchor" href="#running-services-on-kubernetes"></a><a class="link" href="#running-services-on-kubernetes">10.5. Running Reloadly Platform Services on Kubernetes</a></h3>
 <div class="paragraph">
 <p>From root of project root, issue the following commands.</p>
 </div>
@@ -2508,6 +2530,155 @@ kubectl delete - f https://raw.githubusercontent.com/arunkpatra/reloadly-service
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-services-on-kubernetes-using-helm"><a class="anchor" href="#running-services-on-kubernetes-using-helm"></a><a class="link" href="#running-services-on-kubernetes-using-helm">10.6. Helm Charts 3</a></h3>
+<div class="paragraph">
+<p>You can use Helm Charts to install software on your K8s cluster.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="markdown"># Reloadly Helm Chart
+
+## Notes
+
+#### Install (Perform a Release)
+
+``` 
+$ helm install reloadly-dev ./reloadly --namespace reloadly --create-namespace --dry-run
+# Or, run with overrides
+$ helm install -f override.yaml reloadly-dev ./reloadly --namespace reloadly --create-namespace --dry-run
+```
+
+&gt; The `-f override.yaml` is an override file which contain properties. These properties override the values in
+`values.yaml`. Also, the `--create-namespace` works in HELM 3.2.0 and above. To .perform an actual release, remove the `--dry-run` parameter
+
+#### Run Tests for a Release
+
+``` 
+$ helm test reloadly-dev --namespace reloadly --logs
+
+NAME: reloadly-dev
+LAST DEPLOYED: Tue May 11 13:46:57 2021
+NAMESPACE: reloadly
+STATUS: deployed
+REVISION: 1
+TEST SUITE:     reloadly-dev-admin-service-test
+Last Started:   Tue May 11 13:54:35 2021
+Last Completed: Tue May 11 13:54:45 2021
+Phase:          Succeeded
+TEST SUITE:     reloadly-dev-authentication-service-test
+Last Started:   Tue May 11 13:54:45 2021
+Last Completed: Tue May 11 13:54:52 2021
+Phase:          Succeeded
+NOTES:
+
+```
+
+#### Get Status of a Release
+
+``` 
+$ helm status reloadly-dev --namespace reloadly
+
+NAME: reloadly-dev
+LAST DEPLOYED: Tue May 11 13:46:57 2021
+NAMESPACE: reloadly
+STATUS: deployed
+REVISION: 1
+TEST SUITE:     reloadly-dev-admin-service-test
+Last Started:   Tue May 11 13:54:35 2021
+Last Completed: Tue May 11 13:54:45 2021
+Phase:          Succeeded
+TEST SUITE:     reloadly-dev-authentication-service-test
+Last Started:   Tue May 11 13:54:45 2021
+Last Completed: Tue May 11 13:54:52 2021
+Phase:          Succeeded
+NOTES:
+
+```
+
+#### List Resources created by a Release
+
+``` 
+$ helm get manifest reloadly-dev --namespace reloadly | kubectl get --namespace reloadly -f -
+
+NAME                                  SECRETS   AGE
+serviceaccount/reloadly-svc-account   1         10m
+
+NAME                             TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/admin-service            NodePort   10.103.136.28   &lt;none&gt;        9595:30095/TCP   10m
+service/authentication-service   NodePort   10.98.139.169   &lt;none&gt;        9090:30090/TCP   10m
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/admin-service            1/1     1            1           10m
+deployment.apps/authentication-service   1/1     1            1           10m
+```
+
+#### Upgrade a Release
+
+``` 
+helm upgrade --install reloadly-dev ./reloadly --namespace reloadly --force
+```
+
+#### List all Releases
+
+``` 
+$ helm ls --namespace reloadly
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+reloadly-dev    reloadly        1               2021-05-11 13:46:57.851863 +0530 IST    deployed        reloadly-1.0.0  1.3.0 
+```
+
+#### Show Release History
+
+``` 
+$ helm history reloadly-dev --namespace reloadly
+
+REVISION        UPDATED                         STATUS          CHART           APP VERSION     DESCRIPTION     
+1               Tue May 11 13:46:57 2021        deployed        reloadly-1.0.0  1.3.0           Install complete
+
+```
+
+#### Rollback a Release
+
+``` 
+$ helm rollback reloadly-dev 1 --namespace reloadly 
+
+Rollback was a success! Happy Helming!
+
+$ helm history reloadly-dev --namespace reloadly
+```
+
+#### Uninstall a Release
+
+``` 
+helm uninstall reloadly-dev --namespace reloadly
+```
+
+#### Storage
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+
+List persistent volumes
+
+``` 
+$ kubectl get pv -n reloadly
+
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                          STORAGECLASS   REASON   AGE
+pvc-0037a827-74ae-49aa-9a37-c76729096a61   8Gi        RWO            Delete           Bound    kafka/data-kafka-zookeeper-0   hostpath                3d14h
+pvc-145db59b-4761-495b-8b27-68c00e8cd506   8Gi        RWO            Delete           Bound    kafka/data-kafka-0             hostpath                3d14h
+pvc-eaa8ea32-e748-4758-94fa-61216b8999d9   8Gi        RWO            Delete           Bound    mysql/data-mysql-0             hostpath                3d16h
+
+```
+
+List persistent volume claims
+
+#### Delete a Pod
+
+``` 
+$ kubectl delete pod &lt;pod_name&gt; --namespace reloadly
+```</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -2634,7 +2805,7 @@ A PO has no authority over engineering teams but fully owns requirements and wha
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.0-SNAPSHOT<br>
+Version 1.3.0<br>
 </div>
 </div>
 </body>
