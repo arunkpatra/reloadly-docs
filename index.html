@@ -536,7 +536,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <span id="author" class="author">Arun Patra</span><br>
 <span id="email" class="email"><a href="https://twitter.com/arunkpatra">@arunkpatra</a></span><br>
 <span id="revnumber">version 1.3.0,</span>
-<span id="revdate">2021-05-15T15:01:41Z</span>
+<span id="revdate">2021-06-20T16:15:17Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -656,17 +656,24 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel3">
 <li><a href="#install-4">10.4.1. Install</a></li>
 <li><a href="#run">10.4.2. Run</a></li>
-<li><a href="#mysql-install">10.4.3. MySQL Install</a></li>
-<li><a href="#mysql-cleanup">10.4.4. MySQL Cleanup</a></li>
-<li><a href="#kafka-install">10.4.5. Kafka Install</a></li>
-<li><a href="#kafka-cleanup">10.4.6. Kafka Cleanup</a></li>
 </ul>
 </li>
-<li><a href="#running-services-on-kubernetes">10.5. Running Reloadly Platform Services on Kubernetes</a></li>
-<li><a href="#running-services-on-kubernetes-using-helm">10.6. Helm Charts 3</a></li>
-<li><a href="#jaeger">10.7. Jaeger</a>
+<li><a href="#helm-install">10.5. Helm Install</a></li>
+<li><a href="#mysql-install">10.6. MySQL Install</a>
 <ul class="sectlevel3">
-<li><a href="#install-5">10.7.1. Install</a></li>
+<li><a href="#mysql-cleanup">10.6.1. MySQL Cleanup</a></li>
+</ul>
+</li>
+<li><a href="#kafka-install">10.7. Kafka Install</a>
+<ul class="sectlevel3">
+<li><a href="#kafka-cleanup">10.7.1. Kafka Cleanup</a></li>
+</ul>
+</li>
+<li><a href="#running-services-on-kubernetes">10.8. Running Reloadly Platform Services on Kubernetes</a></li>
+<li><a href="#running-services-on-kubernetes-using-helm">10.9. Helm Charts 3</a></li>
+<li><a href="#jaeger">10.10. Jaeger</a>
+<ul class="sectlevel3">
+<li><a href="#install-5">10.10.1. Install</a></li>
 </ul>
 </li>
 </ul>
@@ -1048,7 +1055,7 @@ create TABLE api_key_table</span>
     <span class="type">CONSTRAINT</span> fk_api_key_table_client_id_client_id_table
         <span class="directive">FOREIGN</span> <span class="type">KEY</span> (client_id)
             <span class="keyword">REFERENCES</span> client_id_table (client_id)
-)</code></pre>
+);</code></pre>
 </div>
 </div>
 </div>
@@ -2159,27 +2166,32 @@ docker build --tag reloadly/account-service .</pre>
 <div class="sect3">
 <h4 id="access"><a class="anchor" href="#access"></a><a class="link" href="#access">10.3.2. Access</a></h4>
 <div class="paragraph">
-<p>To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>kubectl proxy</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now access Dashboard at:</p>
-</div>
-<div class="paragraph">
-<p><a href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/" class="bare">localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</a></p>
+<p>To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. We need to create an admin-user to login to the Kubernetes Dashboard.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="login"><a class="anchor" href="#login"></a><a class="link" href="#login">10.3.3. Login</a></h4>
 <div class="paragraph">
-<p>To login to the dashboard, you would need a token. See instructions <a href="https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md">here</a></p>
+<p>To login to the dashboard, you would need a token. Execute the following commands.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># This creates a user named `admin-user`
+kubectl apply - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/kubernetes-dashboard-admin-user.yaml
+
+# This creates a cluster rolebinding
+kubectl apply - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/kubernetes-dashboard-cluster-role-binding.yaml
+
+# Now get the token
+
+kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Start Proxy</p>
+<p>Reference: See more information <a href="https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Start the Proxy to access the dashboard.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2187,12 +2199,10 @@ docker build --tag reloadly/account-service .</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Get Token</p>
+<p>Now access Dashboard at(Use the token you obtained above):</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"</pre>
-</div>
+<div class="paragraph">
+<p><a href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/" class="bare">localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</a></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -2226,8 +2236,20 @@ docker build --tag reloadly/account-service .</pre>
 <p>Access Linkerd dashboard at <a href="http://localhost:50750/" class="bare">localhost:50750/</a></p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="mysql-install"><a class="anchor" href="#mysql-install"></a><a class="link" href="#mysql-install">10.4.3. MySQL Install</a></h4>
+</div>
+<div class="sect2">
+<h3 id="helm-install"><a class="anchor" href="#helm-install"></a><a class="link" href="#helm-install">10.5. Helm Install</a></h3>
+<div class="paragraph">
+<p>Install Helm. See more information <a href="https://helm.sh/docs/intro/install/">here</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>brew install helm</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mysql-install"><a class="anchor" href="#mysql-install"></a><a class="link" href="#mysql-install">10.6. MySQL Install</a></h3>
 <div class="paragraph">
 <p>See the chart documentation <a href="https://bitnami.com/stack/mysql/helm">here</a>.</p>
 </div>
@@ -2345,9 +2367,8 @@ helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=Nod
 </li>
 </ol>
 </div>
-</div>
 <div class="sect3">
-<h4 id="mysql-cleanup"><a class="anchor" href="#mysql-cleanup"></a><a class="link" href="#mysql-cleanup">10.4.4. MySQL Cleanup</a></h4>
+<h4 id="mysql-cleanup"><a class="anchor" href="#mysql-cleanup"></a><a class="link" href="#mysql-cleanup">10.6.1. MySQL Cleanup</a></h4>
 <div class="paragraph">
 <p>When you no longer need this MySQL server, you can delete the resources just created:</p>
 </div>
@@ -2360,8 +2381,9 @@ helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=Nod
 <p>The above deletes all resources except the persistent volumes.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="kafka-install"><a class="anchor" href="#kafka-install"></a><a class="link" href="#kafka-install">10.4.5. Kafka Install</a></h4>
+</div>
+<div class="sect2">
+<h3 id="kafka-install"><a class="anchor" href="#kafka-install"></a><a class="link" href="#kafka-install">10.7. Kafka Install</a></h3>
 <div class="paragraph">
 <p>See the chart documentation <a href="https://github.com/bitnami/charts/tree/master/bitnami/kafka">here</a>.</p>
 </div>
@@ -2467,9 +2489,8 @@ kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
 </li>
 </ol>
 </div>
-</div>
 <div class="sect3">
-<h4 id="kafka-cleanup"><a class="anchor" href="#kafka-cleanup"></a><a class="link" href="#kafka-cleanup">10.4.6. Kafka Cleanup</a></h4>
+<h4 id="kafka-cleanup"><a class="anchor" href="#kafka-cleanup"></a><a class="link" href="#kafka-cleanup">10.7.1. Kafka Cleanup</a></h4>
 <div class="paragraph">
 <p>When you no longer need this Kafka installation, you can delete the resources just created:</p>
 </div>
@@ -2484,7 +2505,7 @@ kubectl exec --tty -i kafka-client --namespace kafka -- bash</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="running-services-on-kubernetes"><a class="anchor" href="#running-services-on-kubernetes"></a><a class="link" href="#running-services-on-kubernetes">10.5. Running Reloadly Platform Services on Kubernetes</a></h3>
+<h3 id="running-services-on-kubernetes"><a class="anchor" href="#running-services-on-kubernetes"></a><a class="link" href="#running-services-on-kubernetes">10.8. Running Reloadly Platform Services on Kubernetes</a></h3>
 <div class="paragraph">
 <p>From root of project root, issue the following commands.</p>
 </div>
@@ -2533,7 +2554,7 @@ kubectl delete - f https://raw.githubusercontent.com/arunkpatra/reloadly-service
 </div>
 </div>
 <div class="sect2">
-<h3 id="running-services-on-kubernetes-using-helm"><a class="anchor" href="#running-services-on-kubernetes-using-helm"></a><a class="link" href="#running-services-on-kubernetes-using-helm">10.6. Helm Charts 3</a></h3>
+<h3 id="running-services-on-kubernetes-using-helm"><a class="anchor" href="#running-services-on-kubernetes-using-helm"></a><a class="link" href="#running-services-on-kubernetes-using-helm">10.9. Helm Charts 3</a></h3>
 <div class="paragraph">
 <p>You can use Helm Charts to install software on your K8s cluster.</p>
 </div>
@@ -2682,9 +2703,9 @@ $ kubectl delete pod &lt;pod_name&gt; --namespace reloadly
 </div>
 </div>
 <div class="sect2">
-<h3 id="jaeger"><a class="anchor" href="#jaeger"></a><a class="link" href="#jaeger">10.7. Jaeger</a></h3>
+<h3 id="jaeger"><a class="anchor" href="#jaeger"></a><a class="link" href="#jaeger">10.10. Jaeger</a></h3>
 <div class="sect3">
-<h4 id="install-5"><a class="anchor" href="#install-5"></a><a class="link" href="#install-5">10.7.1. Install</a></h4>
+<h4 id="install-5"><a class="anchor" href="#install-5"></a><a class="link" href="#install-5">10.10.1. Install</a></h4>
 <div class="paragraph">
 <p>Reference: <a href="https://linkerd.io/2.10/tasks/distributed-tracing/" class="bare">linkerd.io/2.10/tasks/distributed-tracing/</a></p>
 </div>
@@ -2692,7 +2713,7 @@ $ kubectl delete pod &lt;pod_name&gt; --namespace reloadly
 <div class="content">
 <pre>linkerd jaeger install | kubectl apply -f -
 linkerd jaeger check
-linkerd jaeger dashboard</pre>
+linkerd jaeger dashboard &amp;</pre>
 </div>
 </div>
 </div>
